@@ -12,6 +12,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +23,8 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import java.util.HashMap;
 
 public class RegistrationForm extends AppCompatActivity {
 
@@ -53,7 +57,7 @@ public class RegistrationForm extends AppCompatActivity {
 
     private User user = new User();
 
-    public FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +74,8 @@ public class RegistrationForm extends AppCompatActivity {
 
         btnRegister = (Button) findViewById(R.id.btnRegisterUser);
         mAuth = FirebaseAuth.getInstance();
+
     }
-
-
 
     public void previousStep(View view) {
         viewFlipper.showPrevious();
@@ -88,6 +91,8 @@ public class RegistrationForm extends AppCompatActivity {
     public void register(View view) {
         mAuth.createUserWithEmailAndPassword(user.getUserEmail(), user.getUserPassword());
         String userId = mAuth.getUid();
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.addUser(userId, user);
     }
 
     public void nextStep(View view) {
