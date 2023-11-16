@@ -6,16 +6,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        configFirebase();
         setContentView(R.layout.activity_main);
     }
 
     public void openRegistrationForm(View view) {
         Intent intent = new Intent(this, RegistrationForm.class);
         startActivity(intent);
+    }
+
+    public void configFirebase() {
+        try {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setApplicationId("1:757032153397:android:5719cf22ba57d8089d5c7c") // Replace with your Firebase App ID
+                    .setApiKey("AIzaSyAlaFGL9XWiMgxfg2Xv5QZ9emllKVgaNQQ")       // Replace with your Firebase API Key
+                    .setProjectId("takecar-a8abc") // Replace with your Firebase Project ID
+                    .setDatabaseUrl("takecar-a8abc.appspot.com") // Replace with your Firebase Database URL
+                    .build();
+
+            FirebaseApp.initializeApp(this, options);
+        } catch (Exception e) {
+            System.out.println("Firebase initialization failed: " + e.getMessage());
+        }
     }
 }

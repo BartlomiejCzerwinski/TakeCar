@@ -1,12 +1,25 @@
 package com.example.myapplication.takecar;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class RegistrationForm extends AppCompatActivity {
@@ -40,6 +53,8 @@ public class RegistrationForm extends AppCompatActivity {
 
     private User user = new User();
 
+    public FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +69,7 @@ public class RegistrationForm extends AppCompatActivity {
         btnProvidedTrueData = (Switch) findViewById(R.id.btnProvidedTrueData);
 
         btnRegister = (Button) findViewById(R.id.btnRegisterUser);
+        mAuth = FirebaseAuth.getInstance();
     }
 
 
@@ -67,6 +83,11 @@ public class RegistrationForm extends AppCompatActivity {
             showButton(prevButton);
             showButton(nextButton);
         }
+    }
+
+    public void register(View view) {
+        mAuth.createUserWithEmailAndPassword(user.getUserEmail(), user.getUserPassword());
+        String userId = mAuth.getUid();
     }
 
     public void nextStep(View view) {
