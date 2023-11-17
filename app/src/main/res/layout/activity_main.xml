@@ -64,6 +64,7 @@
         android:text="LOG IN"
         android:textColor="#2E2E2E"
         android:textSize="20dp"
+        android:onClick="openLoginForm"
         app:cornerRadius="200dp"
         app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintEnd_toEndOf="parent"

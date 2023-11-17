@@ -18,7 +18,7 @@ public class DatabaseManager {
         myRef.child(userID).setValue(data);
     }
 
-    private HashMap<String, HashMap<String, String>> createUserObjectForDB(String userID, User user) {
+    public HashMap<String, HashMap<String, String>> createUserObjectForDB(String userID, User user) {
         HashMap<String, HashMap<String, String>> userObject = new HashMap<>();
         HashMap<String, String> userInfo = new HashMap<>();
         HashMap<String, String> userAddress = new HashMap<>();

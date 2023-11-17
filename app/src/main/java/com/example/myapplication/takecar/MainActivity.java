@@ -17,11 +17,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         configFirebase();
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            Intent intent = new Intent(this, MainPageManager.class);
+            startActivity(intent);
+        }
         setContentView(R.layout.activity_main);
     }
 
     public void openRegistrationForm(View view) {
-        Intent intent = new Intent(this, RegistrationForm.class);
+        Intent intent = new Intent(this, RegistrationFormManager.class);
+        startActivity(intent);
+    }
+
+    public void openLoginForm(View view) {
+        Intent intent = new Intent(this, LoginFormManager.class);
         startActivity(intent);
     }
 
