@@ -74,10 +74,16 @@ public class RegistrationFormManager extends AppCompatActivity {
     }
 
     public void register(View view) {
-        mAuth.createUserWithEmailAndPassword(user.getUserEmail(), user.getUserPassword());
-        String userId = mAuth.getUid();
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.addUser(userId, user);
+        mAuth.createUserWithEmailAndPassword(user.getUserEmail(), user.getUserPassword())
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String userId = mAuth.getUid().toString();
+                        DatabaseManager databaseManager = new DatabaseManager();
+                        databaseManager.addUser(userId, user);
+                    } else {
+                        System.out.println("Failed to create account!!");
+                    }
+                });
     }
 
     public void nextStep(View view) {
