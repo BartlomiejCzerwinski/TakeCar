@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         setContentView(R.layout.activity_main);
+
     }
 
     public void openRegistrationForm(View view) {
