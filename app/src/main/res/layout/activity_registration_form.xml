@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationFormManager">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="*REGISTRATION FORM*"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ViewFlipper
         android:id="@+id/viewFlipper"
         android:layout_width="match_parent"
@@ -26,25 +16,40 @@
         <include layout="@layout/registration_step4"/>
     </ViewFlipper>
 
+
     <Button
         android:id="@+id/btnNext"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#0B6FF4"
+        android:fontFamily="@font/poppins"
         android:onClick="nextStep"
         android:text="Next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/viewFlipper" />
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        app:cornerRadius="200dp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewFlipper"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <Button
         android:id="@+id/btnPrev"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#0B6FF4"
+        android:fontFamily="@font/poppins"
         android:onClick="previousStep"
         android:text="Prev"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        app:cornerRadius="200dp"
         app:layout_constraintBottom_toBottomOf="@+id/viewFlipper"
-        app:layout_constraintStart_toStartOf="@+id/viewFlipper" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
