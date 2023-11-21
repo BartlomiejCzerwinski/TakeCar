@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
                     .setApplicationId("1:757032153397:android:5719cf22ba57d8089d5c7c") // Replace with your Firebase App ID
                     .setApiKey("AIzaSyAlaFGL9XWiMgxfg2Xv5QZ9emllKVgaNQQ")       // Replace with your Firebase API Key
                     .setProjectId("takecar-a8abc") // Replace with your Firebase Project ID
-                    .setDatabaseUrl("takecar-a8abc.appspot.com") // Replace with your Firebase Database URL
+                    .setDatabaseUrl("takecar-a8abc.appspot.com")
+                    .setStorageBucket("takecar-a8abc.appspot.com")// Replace with your Firebase Database URL
                     .build();
 
             FirebaseApp.initializeApp(this, options);

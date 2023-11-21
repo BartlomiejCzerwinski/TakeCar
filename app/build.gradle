@@ -45,7 +45,7 @@ dependencies {
     // For example, add the dependencies for Firebase Authentication and Cloud Firestore
     implementation "com.google.firebase:firebase-auth"
     implementation "com.google.firebase:firebase-database"
-
+    implementation "com.google.firebase:firebase-storage"
 }
 
 apply plugin: 'com.google.gms.google-services'

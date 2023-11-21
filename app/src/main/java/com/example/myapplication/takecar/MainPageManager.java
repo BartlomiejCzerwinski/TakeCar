@@ -24,4 +24,9 @@ public class MainPageManager extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    public void openAddCarForm(View view) {
+        Intent intent = new Intent(this, AddCarManager.class);
+        startActivity(intent);
+    }
 }
