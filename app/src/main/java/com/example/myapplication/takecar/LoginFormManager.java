@@ -4,11 +4,13 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +29,8 @@ public class LoginFormManager extends AppCompatActivity {
     private EditText etEmail;
     private EditText etPassword ;
 
+    private TextView tvWrongLoginData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +38,18 @@ public class LoginFormManager extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         etEmail = (EditText) findViewById(R.id.etLoginFormEmail);
         etPassword = (EditText) findViewById(R.id.etLoginFormPassword);
+        tvWrongLoginData = (TextView) findViewById(R.id.tvWrongLoginData);
     }
 
     public void login(View view) {
         String email = getEmail();
         String password = getPassword();
-
+        if(email.length() == 0 || password.length() == 0) {
+            showLoginErrorMessage();
+            Vibrator v = (Vibrator) getSystemService(getApplicationContext().VIBRATOR_SERVICE);
+            v.vibrate(100);
+        }
+        else
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -50,12 +60,19 @@ public class LoginFormManager extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(), MainPageManager.class);
                             startActivity(intent);
                         } else {
+                            showLoginErrorMessage();
+                            Vibrator v = (Vibrator) getSystemService(getApplicationContext().VIBRATOR_SERVICE);
+                            v.vibrate(100);
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                         }
                     }
 
                 });
 
+    }
+
+    public void showLoginErrorMessage() {
+        tvWrongLoginData.setVisibility(View.VISIBLE);
     }
 
     private String getEmail() {
