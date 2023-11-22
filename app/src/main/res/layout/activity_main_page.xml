@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="@+id/textView25"
         app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -27,6 +28,48 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchCompat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:thumb="@drawable/custom_thumb"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:track="@drawable/track" />
+
+    <LinearLayout
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/switchCompat"
+        app:layout_constraintEnd_toEndOf="@+id/switchCompat"
+        app:layout_constraintStart_toStartOf="@+id/switchCompat">
+
+        <TextView
+            android:id="@+id/tvTake"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TAKE"
+            android:fontFamily="@font/poppins"
+            android:textSize="20dp"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tvRent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="RENT"
+            android:fontFamily="@font/poppins"
+            android:textSize="20dp"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button"
