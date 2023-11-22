@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -22,6 +23,9 @@ public class MainPageManager extends AppCompatActivity {
     private TextView tvTake;
     private TextView tvRent;
 
+    private ConstraintLayout layoutRent;
+    private ConstraintLayout layoutTake;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,8 @@ public class MainPageManager extends AppCompatActivity {
         switchCompat = findViewById(R.id.switchCompat);
         tvTake = findViewById(R.id.tvTake);
         tvRent = findViewById(R.id.tvRent);
+        layoutRent = findViewById(R.id.layoutRent);
+        layoutTake = findViewById(R.id.layoutTake);
         setSwitchListener();
     }
 
@@ -54,6 +60,14 @@ public class MainPageManager extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void showLayout(ConstraintLayout layout) {
+        layout.setVisibility(View.VISIBLE);
+    }
+
+    public void hideLayout(ConstraintLayout layout) {
+        layout.setVisibility(View.INVISIBLE);
+    }
+
     public void setSwitchListener() {
         int colorWhite = Color.parseColor("#E2E2E2");
         int colorBlack = Color.parseColor("#2E2E2E");
@@ -62,9 +76,13 @@ public class MainPageManager extends AppCompatActivity {
         if (isSwitchChecked) {
             tvTake.setTextColor(colorBlack);
             tvRent.setTextColor(colorWhite);
+            hideLayout(layoutTake);
+            showLayout(layoutRent);
         } else {
             tvTake.setTextColor(colorWhite);
             tvRent.setTextColor(colorBlack);
+            hideLayout(layoutRent);
+            showLayout(layoutTake);
         }
 
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -73,9 +91,13 @@ public class MainPageManager extends AppCompatActivity {
                 if (isChecked) {
                     tvTake.setTextColor(colorBlack);
                     tvRent.setTextColor(colorWhite);
+                    hideLayout(layoutTake);
+                    showLayout(layoutRent);
                 } else {
                     tvTake.setTextColor(colorWhite);
                     tvRent.setTextColor(colorBlack);
+                    hideLayout(layoutRent);
+                    showLayout(layoutTake);
                 }
             }
         });
