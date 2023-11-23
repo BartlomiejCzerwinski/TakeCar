@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -27,6 +29,7 @@ public class AddCarManager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car_form);
+        initSelectGearboxSpinner();
         initPhotoPicker();
     }
 
@@ -45,6 +48,13 @@ public class AddCarManager extends AppCompatActivity {
         pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageAndVideo.INSTANCE)
                 .build());
+    }
+
+    public void initSelectGearboxSpinner() {
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerGearbox);
+        String[] gearboxes = new String[]{"Gearbox", "Manual", "Automatic"};
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, gearboxes);
+        spinner.setAdapter(adapter);
     }
 
 }

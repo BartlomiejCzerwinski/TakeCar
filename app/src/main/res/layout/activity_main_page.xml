@@ -136,7 +136,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/poppins"
             android:gravity="center"
-            android:text="THIS IS AN TAKE VIEW"
+            android:text="THIS IS A TAKE VIEW"
             android:textColor="@android:color/black"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
