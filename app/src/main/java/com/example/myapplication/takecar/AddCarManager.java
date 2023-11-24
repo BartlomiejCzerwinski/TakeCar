@@ -1,14 +1,17 @@
 package com.example.myapplication.takecar;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -41,29 +44,45 @@ public class AddCarManager extends AppCompatActivity {
     private EditText etHourlyPrice;
     private EditText etDailyPrice;
 
+    private TextView tvAddedPhotosMessage;
+
     private Car car = new Car();
 
+    private ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car_form);
+        tvAddedPhotosMessage = findViewById(R.id.tvAddedPhotosMessage);
+        setNotAddedPhotosMessage();
         initSelectGearboxSpinner();
         setEtObjects();
         initPhotoPicker();
+
+    }
+
+    public void addCar(View view) {
+        getDataFromAddCarForm();
+        System.out.println(car.toString());
     }
 
     public void initPhotoPicker() {
-        ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
+        pickMultipleMedia =
                 registerForActivityResult(new ActivityResultContracts.PickMultipleVisualMedia(MAX_PHOTOS), uris -> {
                     if (!uris.isEmpty()) {
                         Log.d("PhotoPicker", "Number of items selected: " + uris.size());
-                        Log.d("URIS:", uris.get(0).toString());
-                        DatabaseManager databaseManager = new DatabaseManager();
-                        databaseManager.addCarPhotos(uris, "ABC123123123");
+                        car.setPhotosUris(uris);
+                        setAddedPhotosMessage(uris.size());
                     } else {
                         Log.d("PhotoPicker", "No media selected");
+                        setNotAddedPhotosMessage();
                     }
                 });
+    }
+
+    public void launchPhotoPicker(View view) {
         pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageAndVideo.INSTANCE)
                 .build());
@@ -79,16 +98,16 @@ public class AddCarManager extends AppCompatActivity {
     public void getDataFromAddCarForm() {
         car.setProducer(getEtValue(etProducer));
         car.setModel(getEtValue(etModel));
-        car.setYear(Integer.getInteger(getEtValue(etYear)));
-        car.setPower(Integer.getInteger(getEtValue(etPower)));
-        car.setDoors(Integer.getInteger(getEtValue(etDoors)));
-        car.setPlaces(Integer.getInteger(getEtValue(etPlaces)));
+        car.setYear(Integer.parseInt(getEtValue(etYear)));
+        car.setPower(Integer.parseInt(getEtValue(etPower)));
+        car.setDoors(Integer.parseInt(getEtValue(etDoors)));
+        car.setPlaces(Integer.parseInt(getEtValue(etPlaces)));
         car.setPlateNumber(getEtValue(etPlateNumber));
         car.setVin(getEtValue(etVin));
         car.setAirConditioner(rbIsAirConditioner.isChecked());
         car.setGearbox(spinnerGearbox.getSelectedItem().toString());
-        car.setHourlyPrice(Integer.getInteger(getEtValue(etHourlyPrice)));
-        car.setDailyPrice(Integer.getInteger(getEtValue(etDailyPrice)));
+        car.setHourlyPrice(Integer.parseInt(getEtValue(etHourlyPrice)));
+        car.setDailyPrice(Integer.parseInt(getEtValue(etDailyPrice)));
     }
 
     public void setEtObjects() {
@@ -106,8 +125,14 @@ public class AddCarManager extends AppCompatActivity {
         etDailyPrice = findViewById(R.id.etCarDailyPrice);
     }
 
-    public String getEtValue(EditText editText) {
-        return editText.getText().toString().trim();
+    public void setAddedPhotosMessage(int numberOfPhotos) {
+        tvAddedPhotosMessage.setText("✅ Successfully added " + Integer.toString(numberOfPhotos) + " photos!");
     }
+
+    public void setNotAddedPhotosMessage() {
+        tvAddedPhotosMessage.setText("Not added photos yet.");
+    }
+
+    public String getEtValue(EditText editText) {return editText.getText().toString().trim();}
 
 }

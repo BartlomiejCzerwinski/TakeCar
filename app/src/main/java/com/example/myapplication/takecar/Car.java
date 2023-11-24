@@ -1,5 +1,9 @@
 package com.example.myapplication.takecar;
 
+import android.net.Uri;
+
+import java.util.List;
+
 public class Car {
     private String producer;
     private String model;
@@ -13,6 +17,34 @@ public class Car {
     private String gearbox;
     private int hourlyPrice;
     private int dailyPrice;
+    private List<Uri> photosUris;
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "producer='" + producer + '\'' +
+                ", model='" + model + '\'' +
+                ", year=" + year +
+                ", power=" + power +
+                ", doors=" + doors +
+                ", places=" + places +
+                ", plateNumber='" + plateNumber + '\'' +
+                ", vin='" + vin + '\'' +
+                ", isAirConditioner=" + isAirConditioner +
+                ", gearbox='" + gearbox + '\'' +
+                ", hourlyPrice=" + hourlyPrice +
+                ", dailyPrice=" + dailyPrice +
+                ", photosUris=" + photosUris +
+                '}';
+    }
+
+    public List<Uri> getPhotosUris() {
+        return photosUris;
+    }
+
+    public void setPhotosUris(List<Uri> photosUris) {
+        this.photosUris = photosUris;
+    }
 
     public String getProducer() {
         return producer;

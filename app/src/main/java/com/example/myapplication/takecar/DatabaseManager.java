@@ -43,6 +43,11 @@ public class DatabaseManager {
         }
     }
 
+    public void addCar(Car car, String userID) {
+        HashMap<String, HashMap<String, String>> data;
+
+    }
+
     public void addUser(String userID, User user) {
         HashMap<String, HashMap<String, String>> data;
         data = createUserObjectForDB(userID, user);
