@@ -9,6 +9,23 @@
     tools:layout_editor_absoluteY="197dp">
 
     <Button
+        android:id="@+id/btnRegister2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:width="200dp"
+        android:backgroundTint="#0B6FF4"
+        android:fontFamily="@font/poppins"
+        android:onClick="openRegistrationForm"
+        android:text="Add car"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:cornerRadius="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
         android:id="@+id/btnLogin2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,8 +81,8 @@
         android:textColorHint="#2e2e2e"
         android:textColorLink="#2e2e2e"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/radioButton"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+        app:layout_constraintStart_toStartOf="@+id/rbIsAirConditioner"
+        app:layout_constraintTop_toBottomOf="@+id/rbIsAirConditioner" />
 
     <EditText
         android:id="@+id/etCarPlaces"
@@ -239,7 +256,7 @@
 
 
     <RadioButton
-        android:id="@+id/radioButton"
+        android:id="@+id/rbIsAirConditioner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -253,12 +270,11 @@
         android:id="@+id/spinnerGearbox"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:background="#CC0B6FF4"
-        android:backgroundTint="#CC0B6FF4"
-        android:popupBackground="#CC0B6FF4"
-        app:layout_constraintBottom_toBottomOf="@+id/radioButton"
+        android:background="@android:color/transparent"
+        android:popupBackground="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/rbIsAirConditioner"
         app:layout_constraintEnd_toEndOf="@+id/etCarVin"
-        app:layout_constraintTop_toTopOf="@+id/radioButton" />
+        app:layout_constraintTop_toTopOf="@+id/rbIsAirConditioner" />
 
     <TextView
         android:id="@+id/textView3"
