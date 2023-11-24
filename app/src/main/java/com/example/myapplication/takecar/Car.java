@@ -110,8 +110,8 @@ public class Car {
         this.vin = vin;
     }
 
-    public boolean isAirConditioner() {
-        return isAirConditioner;
+    public String isAirConditioner() {
+        return String.valueOf(isAirConditioner);
     }
 
     public void setAirConditioner(boolean airConditioner) {

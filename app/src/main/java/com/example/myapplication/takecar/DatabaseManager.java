@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,9 +44,33 @@ public class DatabaseManager {
         }
     }
 
-    public void addCar(Car car, String userID) {
-        HashMap<String, HashMap<String, String>> data;
+    public void addCar(Car car) {
+        HashMap<String, String> data;
+        String userID = FirebaseAuth.getInstance().getUid();
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        String carID = userID + "_" + timestamp;
+        data = createCarObjectForDB(carID, car);
+        DatabaseReference myRef = database.getReference("cars");
+        myRef.child(carID).setValue(data);
+        addCarPhotos(car.getPhotosUris(), carID);
+    }
 
+    public HashMap<String, String> createCarObjectForDB(String carID, Car car) {
+        HashMap<String, String> carInfo = new HashMap<>();
+        carInfo.put("producer", car.getProducer());
+        carInfo.put("model", car.getModel());
+        carInfo.put("year", String.valueOf(car.getYear()));
+        carInfo.put("power", String.valueOf(car.getPower()));
+        carInfo.put("doors", String.valueOf(car.getDoors()));
+        carInfo.put("places", String.valueOf(car.getPlaces()));
+        carInfo.put("plateNumber", car.getPlateNumber());
+        carInfo.put("vin", car.getVin());
+        carInfo.put("airConditioner", car.isAirConditioner());
+        carInfo.put("gearbox", car.getGearbox());
+        carInfo.put("priceForHour", String.valueOf(car.getHourlyPrice()));
+        carInfo.put("priceForDay", String.valueOf(car.getDailyPrice()));
+
+        return carInfo;
     }
 
     public void addUser(String userID, User user) {

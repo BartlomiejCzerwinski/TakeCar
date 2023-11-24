@@ -66,6 +66,8 @@ public class AddCarManager extends AppCompatActivity {
     public void addCar(View view) {
         getDataFromAddCarForm();
         System.out.println(car.toString());
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.addCar(car);
     }
 
     public void initPhotoPicker() {
@@ -114,7 +116,7 @@ public class AddCarManager extends AppCompatActivity {
         etProducer = findViewById(R.id.etCarProducer);
         etModel = findViewById(R.id.etCarModel);
         etYear = findViewById(R.id.etCarYear);
-        etPower = findViewById(R.id.etCarYear);
+        etPower = findViewById(R.id.etCarPower);
         etDoors = findViewById(R.id.etCarDoors);
         etPlaces = findViewById(R.id.etCarPlaces);
         etPlateNumber = findViewById(R.id.etCarPlateNumber);
