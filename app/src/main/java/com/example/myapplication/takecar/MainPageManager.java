@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -36,6 +39,7 @@ public class MainPageManager extends AppCompatActivity {
         layoutRent = findViewById(R.id.layoutRent);
         layoutTake = findViewById(R.id.layoutTake);
         setSwitchListener();
+        runRecyclerView();
     }
 
     @Override
@@ -45,7 +49,6 @@ public class MainPageManager extends AppCompatActivity {
         }
         backPressedTime = System.currentTimeMillis();
     }
-
 
     public void logout(View view) {
         FirebaseAuth mAuth;
@@ -66,6 +69,14 @@ public class MainPageManager extends AppCompatActivity {
 
     public void hideLayout(ConstraintLayout layout) {
         layout.setVisibility(View.INVISIBLE);
+    }
+    
+    public void runRecyclerView() {
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        MyAdapter myAdapter = new MyAdapter();
+        recyclerView.setAdapter(myAdapter);
     }
 
     public void setSwitchListener() {
