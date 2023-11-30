@@ -5,6 +5,7 @@ import android.net.Uri;
 import java.util.List;
 
 public class Car {
+    private String ID;
     private String producer;
     private String model;
     private int year;
@@ -36,6 +37,33 @@ public class Car {
                 ", dailyPrice=" + dailyPrice +
                 ", photosUris=" + photosUris +
                 '}';
+    }
+
+    public Car(String ID, String producer, String model, int year, int power, int doors, int places, String plateNumber, String vin, boolean isAirConditioner, String gearbox, int hourlyPrice, int dailyPrice) {
+        this.ID = ID;
+        this.producer = producer;
+        this.model = model;
+        this.year = year;
+        this.power = power;
+        this.doors = doors;
+        this.places = places;
+        this.plateNumber = plateNumber;
+        this.vin = vin;
+        this.isAirConditioner = isAirConditioner;
+        this.gearbox = gearbox;
+        this.hourlyPrice = hourlyPrice;
+        this.dailyPrice = dailyPrice;
+    }
+
+    public Car() {
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public List<Uri> getPhotosUris() {

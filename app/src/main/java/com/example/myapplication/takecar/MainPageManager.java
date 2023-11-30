@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 public class MainPageManager extends AppCompatActivity {
 
     private static final int CLOSE_APP_INTERVAL = 1000;
@@ -40,6 +42,20 @@ public class MainPageManager extends AppCompatActivity {
         layoutTake = findViewById(R.id.layoutTake);
         setSwitchListener();
         runRecyclerView();
+
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.getCars(new DatabaseManager.CarDataCallback() {
+            @Override
+            public void onCarsDataReceived(ArrayList<Car> carsList) {
+                System.out.println("CARS INFO:" + carsList.toString());
+            }
+
+            @Override
+            public void onCarsDataError(String errorMessage) {
+
+            }
+        });
+
     }
 
     @Override

@@ -1,18 +1,23 @@
 package com.example.myapplication.takecar;
 
 import android.net.Uri;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,6 +58,51 @@ public class DatabaseManager {
         DatabaseReference myRef = database.getReference("cars");
         myRef.child(carID).setValue(data);
         addCarPhotos(car.getPhotosUris(), carID);
+    }
+
+    public interface CarDataCallback {
+        void onCarsDataReceived(ArrayList<Car> carsList);
+        void onCarsDataError(String errorMessage);
+    }
+
+    public void getCars(CarDataCallback carDataCallback) {
+        DatabaseReference ref = database.getReference("cars");
+        ArrayList<Car> carsList = new ArrayList<Car>();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                HashMap<String, HashMap<String, String>> cars = (HashMap<String, HashMap<String, String>>)dataSnapshot.getValue();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    cars.forEach((key, value) -> {
+                        carsList.add(createCarObject(key, value));
+                    });
+                    carDataCallback.onCarsDataReceived(carsList);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("The read failed: " + error.getCode());
+                carDataCallback.onCarsDataError("ERROR");
+            }
+
+        });
+    }
+
+    public Car createCarObject(String ID, HashMap<String, String> properties) {
+        return new Car(ID,
+                properties.get("producer"),
+                properties.get("model"),
+                Integer.parseInt(properties.get("year")),
+                Integer.parseInt(properties.get("power")),
+                Integer.parseInt(properties.get("doors")),
+                Integer.parseInt(properties.get("places")),
+                properties.get("plateNumber"), properties.get("vin"),
+                Boolean.parseBoolean(properties.get("airConditioner")),
+                properties.get("gearbox"),
+                Integer.parseInt(properties.get("priceForHour")),
+                Integer.parseInt(properties.get("priceForDay")));
     }
 
     public HashMap<String, String> createCarObjectForDB(String carID, Car car) {
