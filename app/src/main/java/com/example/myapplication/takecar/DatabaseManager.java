@@ -5,15 +5,20 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -26,6 +31,17 @@ public class DatabaseManager {
     private String DB_URL = "https://takecar-a8abc-default-rtdb.europe-west1.firebasedatabase.app/";
     private FirebaseDatabase database = FirebaseDatabase.getInstance(DB_URL);
     private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private int numberOfCars = 0;
+
+    public interface CarPhotosCallback {
+        void onCarPhotosReceived(ArrayList<Uri> photosUrisList);
+        void onCarPhotosError(String errorMessage);
+    }
+
+    public interface CarDataCallback {
+        void onCarsDataReceived(ArrayList<Car> carsList);
+        void onCarsDataError(String errorMessage);
+    }
 
     public void addCarPhotos(List<Uri> uris, String carID) {
         for(Uri uri : uris) {
@@ -49,6 +65,56 @@ public class DatabaseManager {
         }
     }
 
+    public void getCarPhotos(String carID, CarPhotosCallback carPhotosCallback) {
+        StorageReference storageRef = storage.getReference().child("cars");
+        storageRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
+            @Override
+            public void onSuccess(ListResult listResult) {
+                ArrayList<Task<Uri>> tasks = new ArrayList<>();
+
+                for (StorageReference item : listResult.getItems()) {
+                    String filename = item.getName();
+
+                    if (filename.startsWith(carID)) {
+                        Task<Uri> task = item.getDownloadUrl();
+                        tasks.add(task);
+                    }
+                }
+
+                Tasks.whenAllComplete(tasks).addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<List<Task<?>>> allTasks) {
+                        ArrayList<Uri> photosUris = new ArrayList<>();
+
+                        for (Task<?> task : allTasks.getResult()) {
+                            if (task.isSuccessful()) {
+                                Uri uri = (Uri) task.getResult();
+                                photosUris.add(uri);
+                            } else {
+                                // Handle failure for individual tasks if needed
+                                Exception exception = task.getException();
+                            }
+                        }
+
+                        if (photosUris.isEmpty()) {
+                            System.out.println("no photos for this car!");
+                            carPhotosCallback.onCarPhotosError("Error");
+                        } else {
+                            carPhotosCallback.onCarPhotosReceived(photosUris);
+                        }
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println("Failed to list photos for this car!");
+                carPhotosCallback.onCarPhotosError("Error");
+            }
+        });
+    }
+
+
     public void addCar(Car car) {
         HashMap<String, String> data;
         String userID = FirebaseAuth.getInstance().getUid();
@@ -60,11 +126,6 @@ public class DatabaseManager {
         addCarPhotos(car.getPhotosUris(), carID);
     }
 
-    public interface CarDataCallback {
-        void onCarsDataReceived(ArrayList<Car> carsList);
-        void onCarsDataError(String errorMessage);
-    }
-
     public void getCars(CarDataCallback carDataCallback) {
         DatabaseReference ref = database.getReference("cars");
         ArrayList<Car> carsList = new ArrayList<Car>();
@@ -74,10 +135,29 @@ public class DatabaseManager {
                 HashMap<String, HashMap<String, String>> cars = (HashMap<String, HashMap<String, String>>)dataSnapshot.getValue();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
                     cars.forEach((key, value) -> {
                         carsList.add(createCarObject(key, value));
+                        getCarPhotos(key, new CarPhotosCallback() {
+                            @Override
+                            public void onCarPhotosReceived(ArrayList<Uri> photosUrisList) {
+                                carsList.get(carsList.size()-1).setPhotosUris(photosUrisList);
+                                numberOfCars ++;
+
+                                if ( numberOfCars == cars.size()) {
+                                    carDataCallback.onCarsDataReceived(carsList);
+                                    numberOfCars = 0;
+                                }
+
+                            }
+
+                            @Override
+                            public void onCarPhotosError(String errorMessage) {
+                                System.out.println(errorMessage);
+                            }
+                        });
                     });
-                    carDataCallback.onCarsDataReceived(carsList);
+
                 }
             }
 
@@ -126,7 +206,6 @@ public class DatabaseManager {
     public void addUser(String userID, User user) {
         HashMap<String, HashMap<String, String>> data;
         data = createUserObjectForDB(userID, user);
-        System.out.println("OBJECT FOR DB: " + data + "AND ID : " + userID);
         DatabaseReference myRef = database.getReference("users");
         myRef.child(userID).setValue(data);
     }

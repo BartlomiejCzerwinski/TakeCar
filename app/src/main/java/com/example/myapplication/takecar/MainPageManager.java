@@ -41,13 +41,14 @@ public class MainPageManager extends AppCompatActivity {
         layoutRent = findViewById(R.id.layoutRent);
         layoutTake = findViewById(R.id.layoutTake);
         setSwitchListener();
-        runRecyclerView();
+
 
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.getCars(new DatabaseManager.CarDataCallback() {
             @Override
             public void onCarsDataReceived(ArrayList<Car> carsList) {
                 System.out.println("CARS INFO:" + carsList.toString());
+                runRecyclerView(carsList);
             }
 
             @Override
@@ -87,11 +88,11 @@ public class MainPageManager extends AppCompatActivity {
         layout.setVisibility(View.INVISIBLE);
     }
     
-    public void runRecyclerView() {
+    public void runRecyclerView(ArrayList<Car> cars) {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        MyAdapter myAdapter = new MyAdapter();
+        MyAdapter myAdapter = new MyAdapter(cars);
         recyclerView.setAdapter(myAdapter);
     }
 
