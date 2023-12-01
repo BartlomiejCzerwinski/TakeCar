@@ -137,11 +137,12 @@ public class DatabaseManager {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
                     cars.forEach((key, value) -> {
-                        carsList.add(createCarObject(key, value));
+                        Car car = createCarObject(key, value);
                         getCarPhotos(key, new CarPhotosCallback() {
                             @Override
                             public void onCarPhotosReceived(ArrayList<Uri> photosUrisList) {
-                                carsList.get(carsList.size()-1).setPhotosUris(photosUrisList);
+                                car.setPhotosUris(photosUrisList);
+                                carsList.add(car);
                                 numberOfCars ++;
 
                                 if ( numberOfCars == cars.size()) {
