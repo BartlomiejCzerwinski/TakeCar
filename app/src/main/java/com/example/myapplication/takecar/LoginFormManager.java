@@ -2,6 +2,7 @@ package com.example.myapplication.takecar;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -41,6 +42,7 @@ public class LoginFormManager extends AppCompatActivity {
         tvWrongLoginData = (TextView) findViewById(R.id.tvWrongLoginData);
     }
 
+    @SuppressLint("SuspiciousIndentation")
     public void login(View view) {
         String email = getEmail();
         String password = getPassword();

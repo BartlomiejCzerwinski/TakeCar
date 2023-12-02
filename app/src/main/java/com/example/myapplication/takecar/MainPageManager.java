@@ -92,7 +92,7 @@ public class MainPageManager extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        MyAdapter myAdapter = new MyAdapter(cars);
+        MyAdapter myAdapter = new MyAdapter(cars, this.getApplicationContext());
         recyclerView.setAdapter(myAdapter);
     }
 

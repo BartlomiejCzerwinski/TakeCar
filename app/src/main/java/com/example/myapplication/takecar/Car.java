@@ -2,9 +2,11 @@ package com.example.myapplication.takecar;
 
 import android.net.Uri;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Car {
+public class Car implements Serializable {
     private String ID;
     private String producer;
     private String model;
@@ -18,7 +20,7 @@ public class Car {
     private String gearbox;
     private int hourlyPrice;
     private int dailyPrice;
-    private List<Uri> photosUris;
+    private List<String> photosUris;
 
     @Override
     public String toString() {
@@ -67,11 +69,21 @@ public class Car {
     }
 
     public List<Uri> getPhotosUris() {
-        return photosUris;
+        List<Uri> result = new ArrayList<Uri>();
+        for (String uri:
+             photosUris) {
+            result.add(Uri.parse(uri));
+        }
+        return result;
     }
 
     public void setPhotosUris(List<Uri> photosUris) {
-        this.photosUris = photosUris;
+        List<String> result = new ArrayList<String>();
+        for (Uri uri:
+             photosUris) {
+            result.add(uri.toString());
+        }
+        this.photosUris = result;
     }
 
     public String getProducer() {

@@ -24,6 +24,7 @@
         <activity android:name=".LoginFormManager"></activity>
         <activity android:name=".MainPageManager"></activity>
         <activity android:name=".AddCarManager"/>
+        <activity android:name=".CarPageManager"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
