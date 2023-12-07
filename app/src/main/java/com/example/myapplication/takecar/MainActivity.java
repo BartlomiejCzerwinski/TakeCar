@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 
 import com.google.firebase.FirebaseApp;
@@ -26,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         setContentView(R.layout.activity_main);
-
     }
 
     public void openRegistrationForm(View view) {
