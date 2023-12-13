@@ -1,12 +1,16 @@
 package com.example.myapplication.takecar;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
 
 public class CarPageManager extends AppCompatActivity {
 
@@ -20,11 +24,18 @@ public class CarPageManager extends AppCompatActivity {
     private TextView tvAirConditioner;
     private TextView tvPower;
 
+    private ImageView ivCar;
+
+    private int CAR_IMAGE_WIDTH = 500;
+    private int CAR_IMAGE_HEIGHT = 260;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_page);
         setTextViewObjects();
+        ivCar = findViewById(R.id.iVCarPage);
         car = getCarFromIntent();
         System.out.println("CAR PAGE DATA:" + car.toString());
         initCarPage();
@@ -57,6 +68,7 @@ public class CarPageManager extends AppCompatActivity {
         setTextView(tvGearbox, car.getGearbox());
         setTextView(tvAirConditioner, car.isAirConditioner());
         setTextView(tvPower, Integer.toString(car.getPower()));
+        Picasso.get().load(car.getPhotosUris().get(0)).into(ivCar);
     }
 
     public void setTextView(TextView textView, String text) {
