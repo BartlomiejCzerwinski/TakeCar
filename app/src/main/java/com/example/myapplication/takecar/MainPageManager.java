@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,8 @@ public class MainPageManager extends AppCompatActivity {
         layoutRent = findViewById(R.id.layoutRent);
         layoutTake = findViewById(R.id.layoutTake);
         setSwitchListener();
+        setUserName();
+
 
 
         DatabaseManager databaseManager = new DatabaseManager();
@@ -57,7 +60,22 @@ public class MainPageManager extends AppCompatActivity {
 
             }
         });
+    }
 
+    public void setUserName() {
+        TextView tvHelloName = findViewById(R.id.tvHelloName);
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.getUserName(new DatabaseManager.UserNameCallback() {
+            @Override
+            public void onNameReceived(String name) {
+                tvHelloName.setText("Hello " + name + ",");
+            }
+
+            @Override
+            public void onCancelledCallback(DatabaseError error) {
+                tvHelloName.setText("Hello,");
+            }
+        });
     }
 
     @Override

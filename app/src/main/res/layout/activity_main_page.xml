@@ -14,8 +14,8 @@
         android:text="rent your car today."
         android:textColor="#e2e2e2"
         android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="@+id/textView25"
-        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+        app:layout_constraintStart_toStartOf="@+id/tvHelloName"
+        app:layout_constraintTop_toBottomOf="@+id/tvHelloName" />
 
 
     <ImageView
@@ -72,13 +72,13 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView25"
+        android:id="@+id/tvHelloName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="90dp"
         android:fontFamily="@font/poppins"
-        android:text="Hello Name,"
+        android:text="Hello"
         android:textColor="#e2e2e2"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"

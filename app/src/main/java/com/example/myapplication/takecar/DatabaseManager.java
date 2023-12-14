@@ -126,6 +126,34 @@ public class DatabaseManager {
         addCarPhotos(car.getPhotosUris(), carID);
     }
 
+    public interface UserNameCallback {
+        void onNameReceived(String name);
+        void onCancelledCallback(DatabaseError error);
+    }
+
+    public void getUserName(UserNameCallback userNameCallback) {
+        DatabaseReference ref = database.getReference("users");
+        String userID = FirebaseAuth.getInstance().getUid();
+
+        ref.child(userID+"/userInfo/firstName").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String name = dataSnapshot.getValue().toString();
+                    System.out.println(name);
+                    userNameCallback.onNameReceived(name);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.err.println("Error: " + databaseError.getMessage());
+                userNameCallback.onCancelledCallback(databaseError);
+            }
+        });
+    }
+
+
     public void getCars(CarDataCallback carDataCallback) {
         DatabaseReference ref = database.getReference("cars");
         ArrayList<Car> carsList = new ArrayList<Car>();
