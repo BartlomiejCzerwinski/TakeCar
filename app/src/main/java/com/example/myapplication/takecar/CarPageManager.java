@@ -75,4 +75,8 @@ public class CarPageManager extends AppCompatActivity {
         textView.setText(text);
     }
 
+    public void backToMainPage(View view) {
+        onBackPressed();
+    }
+
 }
