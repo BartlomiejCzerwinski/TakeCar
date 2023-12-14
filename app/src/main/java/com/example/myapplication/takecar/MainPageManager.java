@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,6 +92,10 @@ public class MainPageManager extends AppCompatActivity {
     public void runRecyclerView(ArrayList<Car> cars) {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.HORIZONTAL);
+        itemDecorator.setDrawable(getDrawable(R.drawable.divider));
+        recyclerView.addItemDecoration(itemDecorator);
 
         MyAdapter myAdapter = new MyAdapter(cars, this.getApplicationContext());
         recyclerView.setAdapter(myAdapter);

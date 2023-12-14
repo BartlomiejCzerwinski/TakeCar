@@ -288,5 +288,4 @@
         app:layout_constraintStart_toStartOf="@+id/btnLogin2"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin2" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

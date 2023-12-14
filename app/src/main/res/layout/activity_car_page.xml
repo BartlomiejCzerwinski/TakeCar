@@ -220,10 +220,13 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/actionModeCloseDrawable"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
-        />
+        android:layout_width="64dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/arrow_back"
+        android:backgroundTint="#0B6FF4"
+        app:layout_constraintStart_toStartOf="@+id/iVCarPage"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
