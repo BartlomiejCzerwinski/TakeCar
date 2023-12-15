@@ -50,6 +50,12 @@ public class CarPageManager extends AppCompatActivity {
         return car;
     }
 
+    public void openRentCarForm(View view) {
+        Intent intent = new Intent(this, RentCarManager.class);
+        intent.putExtra("car", car);
+        startActivity(intent);
+    }
+
     public void setTextViewObjects() {
         tvYear = findViewById(R.id.tvYearCarPage);
         tvTitle = findViewById(R.id.tvTitleCarPage);
