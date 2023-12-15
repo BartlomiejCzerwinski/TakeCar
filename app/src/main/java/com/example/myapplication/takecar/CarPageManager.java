@@ -68,7 +68,7 @@ public class CarPageManager extends AppCompatActivity {
         setTextView(tvGearbox, car.getGearbox());
         setTextView(tvAirConditioner, car.isAirConditioner());
         setTextView(tvPower, Integer.toString(car.getPower()));
-        Picasso.get().load(car.getPhotosUris().get(0)).into(ivCar);
+        Picasso.get().load(car.getPhotosUris().get(0)).fit().into(ivCar);
     }
 
     public void setTextView(TextView textView, String text) {
