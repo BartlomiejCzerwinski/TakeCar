@@ -15,6 +15,11 @@ public class RentCarManager extends AppCompatActivity {
     private SeekBar sbHours;
     private SeekBar sbDays;
 
+    private TextView tvProducerModel;
+    private TextView tvHourPrice;
+    private TextView tvDayPrice;
+    private TextView tvRentalPrice;
+
     private Car car;
 
 
@@ -30,8 +35,37 @@ public class RentCarManager extends AppCompatActivity {
         tvDays = findViewById(R.id.tvDays);
         sbHours = findViewById(R.id.sbHours);
         sbDays = findViewById(R.id.sbDays);
+        tvProducerModel = findViewById(R.id.tvProducerModel);
+        tvHourPrice = findViewById(R.id.tvHourPrice);
+        tvDayPrice = findViewById(R.id.tvDayPrice);
+        tvRentalPrice = findViewById(R.id.tvRentalPrice);
+
+        setRentalInfo();
+
         manageSeekBar(sbHours, tvHours, "hour");
         manageSeekBar(sbDays, tvDays, "day");
+    }
+
+    public void updateRentalPrice() {
+        tvRentalPrice.setText(calculateRentalPrice() + "$");
+    }
+
+    public int calculateRentalPrice() {
+        return (car.getHourlyPrice() * getNumberOfHours()) + (car.getDailyPrice() * getNumberOfDays());
+    }
+
+    public int getNumberOfHours() {
+        return sbHours.getProgress();
+    }
+
+    public int getNumberOfDays() {
+        return sbDays.getProgress();
+    }
+
+    public void setRentalInfo() {
+        tvProducerModel.setText(car.getProducer() + " " + car.getModel());
+        tvHourPrice.setText(car.getHourlyPrice() + "$");
+        tvDayPrice.setText(car.getDailyPrice() + "$");
     }
 
     public Car getCarFromIntent() {
@@ -44,6 +78,7 @@ public class RentCarManager extends AppCompatActivity {
     }
 
     public void manageSeekBar(SeekBar seekBar, TextView textView, String textViewUnit) {
+        updateRentalPrice();
         if (seekBar.getProgress() == 1)
             textView.setText(seekBar.getProgress() + " " + textViewUnit);
         else
@@ -56,6 +91,7 @@ public class RentCarManager extends AppCompatActivity {
                     textView.setText(progress + " " +textViewUnit);
                 else
                     textView.setText(progress + " " + textViewUnit + "s");
+                updateRentalPrice();
             }
 
             @Override

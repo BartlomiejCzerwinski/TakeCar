@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sbHours" />
 
     <TextView
-        android:id="@+id/tvPowerCarPage5"
+        android:id="@+id/tvRentalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPowerCarPage5" />
+        app:layout_constraintTop_toBottomOf="@+id/tvRentalPrice" />
 
     <Button
         android:id="@+id/btnRegister3"
@@ -102,7 +102,7 @@
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <TextView
-        android:id="@+id/tvPowerCarPage3"
+        android:id="@+id/tvDayPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
@@ -111,30 +111,30 @@
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/tvPowerCarPage"
-        app:layout_constraintEnd_toEndOf="@+id/tvPowerCarPage2"
+        app:layout_constraintEnd_toEndOf="@+id/tvHourPrice"
         app:layout_constraintTop_toTopOf="@+id/tvPowerCarPage" />
 
     <TextView
-        android:id="@+id/tvPowerCarPage2"
+        android:id="@+id/tvHourPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="-16dp"
+        android:layout_marginEnd="120dp"
         android:fontFamily="@font/poppins"
         android:text="0$"
         android:textColor="#2F2F2F"
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView10"
-        app:layout_constraintEnd_toEndOf="@+id/tvTitleCarPage2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
     <TextView
-        android:id="@+id/tvTitleCarPage2"
+        android:id="@+id/tvProducerModel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/poppins"
-        android:text="Hyundai i10"
+        android:text="Producer model"
         android:textColor="#2F2F2F"
         android:textSize="32dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView222"
@@ -165,7 +165,7 @@
         android:textColor="#2F2F2F"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="@+id/imageView222"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitleCarPage2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvProducerModel" />
 
     <ImageView
         android:id="@+id/imageView2"
