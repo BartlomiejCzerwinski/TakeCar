@@ -181,4 +181,8 @@ public class Car implements Serializable {
     public void setDailyPrice(int dailyPrice) {
         this.dailyPrice = dailyPrice;
     }
+
+    public String getOwnerID() {
+        return ID.substring(0, ID.indexOf('_'));
+    }
 }
