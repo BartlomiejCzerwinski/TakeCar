@@ -185,4 +185,8 @@ public class Car implements Serializable {
     public String getOwnerID() {
         return ID.substring(0, ID.indexOf('_'));
     }
+
+    public int getRentalTotalPrice(int hours, int days) {
+        return (hours * hourlyPrice) + (days * dailyPrice);
+    }
 }
