@@ -1,5 +1,6 @@
 package com.example.myapplication.takecar;
 
+import android.health.connect.datatypes.StepsCadenceRecord;
 import android.net.Uri;
 import android.os.Build;
 
@@ -22,6 +23,9 @@ import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +45,29 @@ public class DatabaseManager {
     public interface CarDataCallback {
         void onCarsDataReceived(ArrayList<Car> carsList);
         void onCarsDataError(String errorMessage);
+    }
+
+    public void addCarRent(Car car, int numberOfHours, int numberOfDays) {
+        HashMap<String, String> data = new HashMap<String, String>();
+        String userID = FirebaseAuth.getInstance().getUid();
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        String rentID = userID + "_" + car.getID() + "_" + timestamp;
+
+        data.put("carID", car.getID());
+        data.put("ownerID", car.getOwnerID());
+        data.put("takerID", userID);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            data.put("startTime", LocalDateTime.now().toString());
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            data.put("endTime", LocalDateTime.now().plusHours(numberOfHours)
+                    .plusDays(numberOfDays).toString());
+        }
+        int totalPrice = car.getRentalTotalPrice(numberOfHours, numberOfDays);
+        data.put("totalPrice", String.valueOf(totalPrice));
+
+        DatabaseReference myRef = database.getReference("rentals");
+        myRef.child(rentID).setValue(data);
     }
 
     public void addCarPhotos(List<Uri> uris, String carID) {

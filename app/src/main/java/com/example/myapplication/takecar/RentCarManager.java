@@ -44,6 +44,7 @@ public class RentCarManager extends AppCompatActivity {
 
         manageSeekBar(sbHours, tvHours, "hour");
         manageSeekBar(sbDays, tvDays, "day");
+
     }
 
     public void updateRentalPrice() {
