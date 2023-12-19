@@ -3,6 +3,7 @@ package com.example.myapplication.takecar;
 import android.health.connect.datatypes.StepsCadenceRecord;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
 
@@ -48,6 +49,10 @@ public class DatabaseManager {
         void onCarsDataError(String errorMessage);
     }
 
+    public interface AccountBalanceCallback {
+        void onBalanceReceived(float accountBalance);
+    }
+
     public void addCarRent(Car car, int numberOfHours, int numberOfDays) {
         HashMap<String, String> data = new HashMap<String, String>();
         String userID = FirebaseAuth.getInstance().getUid();
@@ -69,6 +74,48 @@ public class DatabaseManager {
 
         DatabaseReference myRef = database.getReference("rentals");
         myRef.child(rentID).setValue(data);
+        rentCarMoneyTransfer(car.getOwnerID(), userID, (float)totalPrice);
+    }
+
+    public void rentCarMoneyTransfer(String carOwnerID, String carTakerID, float money) {
+        getAccountBalance(carOwnerID, new AccountBalanceCallback() {
+            @Override
+            public void onBalanceReceived(float accountBalance) {
+                float carOwnerAccountBalance = accountBalance;
+                getAccountBalance(carTakerID, new AccountBalanceCallback() {
+                    @Override
+                    public void onBalanceReceived(float accountBalance) {
+                        float carTakerAccountBalance = accountBalance;
+                        setAccountBalance(carOwnerID, carOwnerAccountBalance + money);
+                        setAccountBalance(carTakerID, carTakerAccountBalance - money);
+                    }
+                });
+            }
+        });
+    }
+
+    public void getAccountBalance(String accountID, AccountBalanceCallback accountBalanceCallback) {
+        DatabaseReference databaseReference = database.getReference("users/"+accountID+"/userInfo/accountBalance");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                System.out.println("accountID: " + accountID);
+                float accountBalance = Float.valueOf(snapshot.getValue().toString());
+                System.out.println("balance:" + accountBalance);
+                accountBalanceCallback.onBalanceReceived(accountBalance);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void setAccountBalance(String accountID, float newBalance) {
+        DatabaseReference databaseReference = database
+                .getReference("users/"+accountID+"/userInfo/accountBalance");
+        databaseReference.setValue(String.valueOf(newBalance));
     }
 
     public void addCarPhotos(List<Uri> uris, String carID) {
