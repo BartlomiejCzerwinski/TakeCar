@@ -59,7 +59,13 @@ public class DatabaseManager {
         void onFailedTransfer(String message);
     }
 
-    public void addCarRent(Car car, int numberOfHours, int numberOfDays) {
+    public interface RentCarCallback {
+        void onSuccessfulRent();
+        void onFailedRent();
+    }
+
+    public void addCarRent(Car car, int numberOfHours, int numberOfDays,
+                           RentCarCallback rentCarCallback) {
         HashMap<String, String> data = new HashMap<String, String>();
         String userID = FirebaseAuth.getInstance().getUid();
         String timestamp = String.valueOf(System.currentTimeMillis());
@@ -85,11 +91,13 @@ public class DatabaseManager {
 
                 DatabaseReference myRef = database.getReference("rentals");
                 myRef.child(rentID).setValue(data);
+                rentCarCallback.onSuccessfulRent();
             }
 
             @Override
             public void onFailedTransfer(String message) {
                 System.out.println(message);
+                rentCarCallback.onFailedRent();
             }
         });
     }
