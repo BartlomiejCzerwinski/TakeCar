@@ -36,6 +36,7 @@ public class DatabaseManager {
     private FirebaseDatabase database = FirebaseDatabase.getInstance(DB_URL);
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private int numberOfCars = 0;
+    private float INITIAL_ACCOUNT_BALANCE = 1500.0F;
 
     public interface CarPhotosCallback {
         void onCarPhotosReceived(ArrayList<Uri> photosUrisList);
@@ -276,6 +277,7 @@ public class DatabaseManager {
         userInfo.put("phoneNumber", user.getUserPhoneNumber());
         userInfo.put("email", user.getUserEmail());
         userInfo.put("dateOfBirth", user.getUserBirthDate());
+        userInfo.put("accountBalance", String.valueOf(INITIAL_ACCOUNT_BALANCE));
 
         userAddress.put("country", user.getAddressCountry());
         userAddress.put("street", user.getAddressStreet());
