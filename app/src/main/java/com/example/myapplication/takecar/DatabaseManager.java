@@ -6,6 +6,7 @@ import android.os.Build;
 import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
+import androidx.dynamicanimation.animation.SpringAnimation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,41 +54,63 @@ public class DatabaseManager {
         void onBalanceReceived(float accountBalance);
     }
 
+    public interface MoneyTransferCallback {
+        void onSuccessfulTransfer(String message);
+        void onFailedTransfer(String message);
+    }
+
     public void addCarRent(Car car, int numberOfHours, int numberOfDays) {
         HashMap<String, String> data = new HashMap<String, String>();
         String userID = FirebaseAuth.getInstance().getUid();
         String timestamp = String.valueOf(System.currentTimeMillis());
         String rentID = userID + "_" + car.getID() + "_" + timestamp;
-
-        data.put("carID", car.getID());
-        data.put("ownerID", car.getOwnerID());
-        data.put("takerID", userID);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            data.put("startTime", LocalDateTime.now().toString());
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            data.put("endTime", LocalDateTime.now().plusHours(numberOfHours)
-                    .plusDays(numberOfDays).toString());
-        }
         int totalPrice = car.getRentalTotalPrice(numberOfHours, numberOfDays);
-        data.put("totalPrice", String.valueOf(totalPrice));
 
-        DatabaseReference myRef = database.getReference("rentals");
-        myRef.child(rentID).setValue(data);
-        rentCarMoneyTransfer(car.getOwnerID(), userID, (float)totalPrice);
+        rentCarMoneyTransfer(car.getOwnerID(), userID, (float) totalPrice,
+                new MoneyTransferCallback() {
+            @Override
+            public void onSuccessfulTransfer(String message) {
+                System.out.println(message);
+                data.put("carID", car.getID());
+                data.put("ownerID", car.getOwnerID());
+                data.put("takerID", userID);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    data.put("startTime", LocalDateTime.now().toString());
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    data.put("endTime", LocalDateTime.now().plusHours(numberOfHours)
+                            .plusDays(numberOfDays).toString());
+                }
+                data.put("totalPrice", String.valueOf(totalPrice));
+
+                DatabaseReference myRef = database.getReference("rentals");
+                myRef.child(rentID).setValue(data);
+            }
+
+            @Override
+            public void onFailedTransfer(String message) {
+                System.out.println(message);
+            }
+        });
     }
 
-    public void rentCarMoneyTransfer(String carOwnerID, String carTakerID, float money) {
-        getAccountBalance(carOwnerID, new AccountBalanceCallback() {
+    public void rentCarMoneyTransfer(String carOwnerID, String carTakerID,
+                                     float money, MoneyTransferCallback moneyTransferCallback) {
+        getAccountBalance(carTakerID, new AccountBalanceCallback() {
             @Override
-            public void onBalanceReceived(float accountBalance) {
-                float carOwnerAccountBalance = accountBalance;
-                getAccountBalance(carTakerID, new AccountBalanceCallback() {
+            public void onBalanceReceived(float accountBalance){
+                float carTakerAccountBalance = accountBalance;
+                if (carTakerAccountBalance - money < 0) {
+                    moneyTransferCallback.onFailedTransfer("Not enought money on account");
+                    return;
+                }
+                getAccountBalance(carOwnerID, new AccountBalanceCallback() {
                     @Override
                     public void onBalanceReceived(float accountBalance) {
-                        float carTakerAccountBalance = accountBalance;
+                        float carOwnerAccountBalance = accountBalance;
                         setAccountBalance(carOwnerID, carOwnerAccountBalance + money);
                         setAccountBalance(carTakerID, carTakerAccountBalance - money);
+                        moneyTransferCallback.onSuccessfulTransfer("Successfully rented a car!");
                     }
                 });
             }
