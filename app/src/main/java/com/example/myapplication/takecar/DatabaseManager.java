@@ -1,5 +1,6 @@
 package com.example.myapplication.takecar;
 
+import android.content.BroadcastReceiver;
 import android.health.connect.datatypes.StepsCadenceRecord;
 import android.net.Uri;
 import android.os.Build;
@@ -38,6 +39,7 @@ public class DatabaseManager {
     private FirebaseDatabase database = FirebaseDatabase.getInstance(DB_URL);
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private int numberOfCars = 0;
+    private int reservedCars = 0;
     private float INITIAL_ACCOUNT_BALANCE = 1500.0F;
 
     public interface CarPhotosCallback {
@@ -77,6 +79,12 @@ public class DatabaseManager {
             @Override
             public void onSuccessfulTransfer(String message) {
                 System.out.println(message);
+                String endRentalTime = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    endRentalTime = LocalDateTime.now().plusHours(numberOfHours)
+                            .plusDays(numberOfDays).toString();
+                }
+                setCarEndRentalTime(car.getID(), endRentalTime);
                 data.put("carID", car.getID());
                 data.put("ownerID", car.getOwnerID());
                 data.put("takerID", userID);
@@ -84,8 +92,7 @@ public class DatabaseManager {
                     data.put("startTime", LocalDateTime.now().toString());
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    data.put("endTime", LocalDateTime.now().plusHours(numberOfHours)
-                            .plusDays(numberOfDays).toString());
+                    data.put("endTime", endRentalTime);
                 }
                 data.put("totalPrice", String.valueOf(totalPrice));
 
@@ -100,6 +107,11 @@ public class DatabaseManager {
                 rentCarCallback.onFailedRent();
             }
         });
+    }
+
+    public void setCarEndRentalTime(String carID, String endRentalTime) {
+        DatabaseReference databaseReference = database.getReference("cars/"+carID+"/endRentalTime");
+        databaseReference.setValue(endRentalTime);
     }
 
     public void rentCarMoneyTransfer(String carOwnerID, String carTakerID,
@@ -271,6 +283,10 @@ public class DatabaseManager {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
                     cars.forEach((key, value) -> {
+                        if(isCarRented(value.get("endRentalTime"))) {
+                            reservedCars++;
+                            return;
+                        }
                         Car car = createCarObject(key, value);
                         getCarPhotos(key, new CarPhotosCallback() {
                             @Override
@@ -279,7 +295,7 @@ public class DatabaseManager {
                                 carsList.add(car);
                                 numberOfCars ++;
 
-                                if ( numberOfCars == cars.size()) {
+                                if ( numberOfCars == cars.size()-reservedCars) {
                                     carDataCallback.onCarsDataReceived(carsList);
                                     numberOfCars = 0;
                                 }
@@ -303,6 +319,23 @@ public class DatabaseManager {
             }
 
         });
+    }
+
+    public boolean isCarRented(String endRentalTime) {
+        LocalDateTime now = null;
+        LocalDateTime endRentalTimeValue = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            now = LocalDateTime.now();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            endRentalTimeValue = LocalDateTime.parse(endRentalTime);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if(now.isBefore(endRentalTimeValue)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Car createCarObject(String ID, HashMap<String, String> properties) {
