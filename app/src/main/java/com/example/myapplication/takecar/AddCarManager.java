@@ -3,6 +3,7 @@ package com.example.myapplication.takecar;
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.time.LocalDateTime;
 
 public class AddCarManager extends AppCompatActivity {
     private int MAX_PHOTOS = 8;

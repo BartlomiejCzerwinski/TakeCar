@@ -306,18 +306,21 @@ public class DatabaseManager {
     }
 
     public Car createCarObject(String ID, HashMap<String, String> properties) {
-        return new Car(ID,
-                properties.get("producer"),
-                properties.get("model"),
-                Integer.parseInt(properties.get("year")),
-                Integer.parseInt(properties.get("power")),
-                Integer.parseInt(properties.get("doors")),
-                Integer.parseInt(properties.get("places")),
-                properties.get("plateNumber"), properties.get("vin"),
-                Boolean.parseBoolean(properties.get("airConditioner")),
-                properties.get("gearbox"),
-                Integer.parseInt(properties.get("priceForHour")),
-                Integer.parseInt(properties.get("priceForDay")));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return new Car(ID,
+                    properties.get("producer"),
+                    properties.get("model"),
+                    Integer.parseInt(properties.get("year")),
+                    Integer.parseInt(properties.get("power")),
+                    Integer.parseInt(properties.get("doors")),
+                    Integer.parseInt(properties.get("places")),
+                    properties.get("plateNumber"), properties.get("vin"),
+                    Boolean.parseBoolean(properties.get("airConditioner")),
+                    properties.get("gearbox"),
+                    Integer.parseInt(properties.get("priceForHour")),
+                    Integer.parseInt(properties.get("priceForDay")));
+        }
+        return null;
     }
 
     public HashMap<String, String> createCarObjectForDB(String carID, Car car) {
@@ -334,6 +337,9 @@ public class DatabaseManager {
         carInfo.put("gearbox", car.getGearbox());
         carInfo.put("priceForHour", String.valueOf(car.getHourlyPrice()));
         carInfo.put("priceForDay", String.valueOf(car.getDailyPrice()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            carInfo.put("endRentalTime", String.valueOf(LocalDateTime.now().minusDays(1))); // If the car was never rented, it's rental date is expired.
+        }                                                                                   // The car will be available after adding it.
 
         return carInfo;
     }
