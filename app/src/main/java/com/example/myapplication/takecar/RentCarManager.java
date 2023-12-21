@@ -3,8 +3,11 @@ package com.example.myapplication.takecar;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +48,24 @@ public class RentCarManager extends AppCompatActivity {
         manageSeekBar(sbHours, tvHours, "hour");
         manageSeekBar(sbDays, tvDays, "day");
 
+    }
+
+    public void rentCar(View view) {
+        int numberOfHours = getNumberOfHours();
+        int numberOfDays = getNumberOfDays();
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.addCarRent(car, numberOfHours, numberOfDays
+                , new DatabaseManager.RentCarCallback() {
+            @Override
+            public void onSuccessfulRent() {
+                System.out.println("Successfully rented car!");
+            }
+
+            @Override
+            public void onFailedRent() {
+                System.out.println("Failed to rent car!");
+            }
+        });
     }
 
     public void updateRentalPrice() {
