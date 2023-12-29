@@ -1,6 +1,9 @@
 package com.example.myapplication.takecar;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -53,19 +56,48 @@ public class RentCarManager extends AppCompatActivity {
     public void rentCar(View view) {
         int numberOfHours = getNumberOfHours();
         int numberOfDays = getNumberOfDays();
+        Context context = this;
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.addCarRent(car, numberOfHours, numberOfDays
                 , new DatabaseManager.RentCarCallback() {
             @Override
             public void onSuccessfulRent() {
                 System.out.println("Successfully rented car!");
+                showAlertDialog(context, "Successfully rented car!");
             }
 
             @Override
             public void onFailedRent() {
+
                 System.out.println("Failed to rent car!");
+                showAlertDialog(context, "Failed to rent car!");
             }
         });
+    }
+    public static void showAlertDialog(Context context, String message) {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+        alertDialogBuilder.setTitle("Rent car info");
+
+        alertDialogBuilder.setMessage(message);
+
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                backToMainPage(context);
+            }
+        });
+        alertDialogBuilder.setCancelable(false);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public static void backToMainPage(Context context) {
+        Intent intent = new Intent(context, MainPageManager.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Wyczyść stos aktywności
+        context.startActivity(intent);
     }
 
     public void updateRentalPrice() {
