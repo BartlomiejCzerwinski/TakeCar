@@ -21,8 +21,8 @@ import java.util.Locale;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     ArrayList<Car> carsList;
-    private int CAR_IMAGE_WIDTH = 120;
-    private int CAR_IMAGE_HEIGHT = 70;
+    private int CAR_IMAGE_WIDTH = 400;
+    private int CAR_IMAGE_HEIGHT = 250;
     Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

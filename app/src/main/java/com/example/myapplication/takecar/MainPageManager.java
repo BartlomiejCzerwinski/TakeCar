@@ -109,9 +109,9 @@ public class MainPageManager extends AppCompatActivity {
     
     public void runRecyclerView(ArrayList<Car> cars) {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.HORIZONTAL);
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(getDrawable(R.drawable.divider));
         recyclerView.addItemDecoration(itemDecorator);
 
