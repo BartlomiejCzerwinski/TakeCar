@@ -28,11 +28,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
         private final ImageView imageView;
+        private final TextView tvYear;
+        private final TextView tvDailyPrice;
 
         public ViewHolder(View view) {
             super(view);
             textView = (TextView) view.findViewById(R.id.textViewCarListElement);
             imageView = (ImageView) view.findViewById(R.id.ivCar);
+            tvYear = (TextView) view.findViewById(R.id.textViewCarListElementYear);
+            tvDailyPrice = (TextView) view.findViewById(R.id.textViewCarListElementHourlyPrice);
         }
         public TextView getTextView() {
             return textView;
@@ -40,6 +44,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         public ImageView getImageView() {
             return imageView;
+        }
+
+        public TextView getTvYear() {
+            return tvYear;
+        }
+
+        public TextView getTvDailyPrice() {
+            return tvDailyPrice;
         }
     }
 
@@ -73,6 +85,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         viewHolder.itemView.setTag(carsList.get(position).getID());
         viewHolder.getTextView().setText(carsList.get(position).getProducer().toString() + " " + carsList.get(position).getModel());
         Picasso.get().load(carsList.get(position).getPhotosUris().get(0)).fit().into(viewHolder.getImageView());
+        viewHolder.getTvYear().setText(String.valueOf(carsList.get(position).getYear()));
+        viewHolder.getTvDailyPrice().setText("FROM " + carsList.get(position).getHourlyPrice() + "$/hour");
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

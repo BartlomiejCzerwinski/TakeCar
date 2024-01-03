@@ -7,16 +7,56 @@
     android:background="@drawable/list_car_background"
     android:onClick="runCarPage">
 
+
+    <TextView
+        android:id="@+id/textViewCarListElementYear"
+        android:layout_width="120dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins"
+        android:text="2012"
+        android:textColor="#2E2E2E"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/textViewCarListElement"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCarListElement" />
+
+    <ImageView
+        android:id="@+id/myImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:scaleY="0.8"
+        android:src="@drawable/custom_thumb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewCarListElementHourlyPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="FROM 1292$/hour"
+        android:textColor="#E2E2E2"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/myImageView"
+        app:layout_constraintEnd_toEndOf="@+id/myImageView"
+        app:layout_constraintStart_toStartOf="@+id/myImageView"
+        app:layout_constraintTop_toTopOf="@+id/myImageView" />
+
     <TextView
         android:id="@+id/textViewCarListElement"
         android:layout_width="120dp"
         android:layout_height="22dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/poppins"
         android:text="Hyundai i10"
         android:textColor="#2E2E2E"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="parent" />
 
