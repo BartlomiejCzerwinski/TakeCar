@@ -72,7 +72,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // contents of the view with that element
         viewHolder.itemView.setTag(carsList.get(position).getID());
         viewHolder.getTextView().setText(carsList.get(position).getProducer().toString() + " " + carsList.get(position).getModel());
-        Picasso.get().load(carsList.get(position).getPhotosUris().get(0)).resize(CAR_IMAGE_WIDTH, CAR_IMAGE_HEIGHT).into(viewHolder.getImageView());
+        Picasso.get().load(carsList.get(position).getPhotosUris().get(0)).fit().into(viewHolder.getImageView());
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
