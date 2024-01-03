@@ -26,6 +26,7 @@ import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -232,6 +233,10 @@ public class DatabaseManager {
         });
     }
 
+    public boolean isCarOwnerWantsToLoadHisCarOnTakePage(String carID, String userID) {
+        return carID.equals(userID);
+    }
+
 
     public void addCar(Car car) {
         HashMap<String, String> data;
@@ -283,30 +288,31 @@ public class DatabaseManager {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
                     cars.forEach((key, value) -> {
-                        if(isCarRented(value.get("endRentalTime"))) {
+                        if (isCarRented(value.get("endRentalTime"))) {
                             reservedCars++;
                             return;
                         }
                         Car car = createCarObject(key, value);
-                        getCarPhotos(key, new CarPhotosCallback() {
-                            @Override
-                            public void onCarPhotosReceived(ArrayList<Uri> photosUrisList) {
-                                car.setPhotosUris(photosUrisList);
-                                carsList.add(car);
-                                numberOfCars ++;
+                            getCarPhotos(key, new CarPhotosCallback() {
+                                @Override
+                                public void onCarPhotosReceived(ArrayList<Uri> photosUrisList) {
+                                    car.setPhotosUris(photosUrisList);
+                                    carsList.add(car);
+                                    numberOfCars++;
 
-                                if ( numberOfCars == cars.size()-reservedCars) {
-                                    carDataCallback.onCarsDataReceived(carsList);
-                                    numberOfCars = 0;
+                                    if (numberOfCars == cars.size() - reservedCars) {
+                                        ArrayList<Car> result = getCarsNotOwnedByLoggedUser(carsList);
+                                        carDataCallback.onCarsDataReceived(result);
+                                        numberOfCars = 0;
+                                    }
+
                                 }
 
-                            }
-
-                            @Override
-                            public void onCarPhotosError(String errorMessage) {
-                                System.out.println(errorMessage);
-                            }
-                        });
+                                @Override
+                                public void onCarPhotosError(String errorMessage) {
+                                    System.out.println(errorMessage);
+                                }
+                            });
                     });
 
                 }
@@ -319,6 +325,16 @@ public class DatabaseManager {
             }
 
         });
+    }
+
+    public ArrayList<Car> getCarsNotOwnedByLoggedUser(ArrayList<Car> carsList) {
+        ArrayList<Car> result = new ArrayList<Car>();
+        for (Car car : carsList) {
+            if (!isCarOwnerWantsToLoadHisCarOnTakePage(car.getOwnerID(), FirebaseAuth.getInstance().getUid())) {
+                result.add(car);
+            }
+        }
+        return result;
     }
 
     public boolean isCarRented(String endRentalTime) {
