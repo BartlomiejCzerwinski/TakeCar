@@ -86,14 +86,6 @@ public class MainPageManager extends AppCompatActivity {
         backPressedTime = System.currentTimeMillis();
     }
 
-    public void logout(View view) {
-        FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.signOut();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-
     public void openAddCarForm(View view) {
         Intent intent = new Intent(this, AddCarManager.class);
         startActivity(intent);
