@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
+import java.net.InterfaceAddress;
+
 public class CarPageManager extends AppCompatActivity {
 
     private Car car;
@@ -23,6 +25,8 @@ public class CarPageManager extends AppCompatActivity {
     private TextView tvGearbox;
     private TextView tvAirConditioner;
     private TextView tvPower;
+    private TextView tvHourlyPrice;
+    private TextView tvDailyPrice;
 
     private ImageView ivCar;
 
@@ -64,6 +68,8 @@ public class CarPageManager extends AppCompatActivity {
         tvGearbox = findViewById(R.id.tvGearboxCarPage);
         tvAirConditioner = findViewById(R.id.tvAcCarPage);
         tvPower = findViewById(R.id.tvPowerCarPage);
+        tvHourlyPrice = findViewById(R.id.tvCarPageHourlyPrice);
+        tvDailyPrice = findViewById(R.id.tvCarPageDailyPrice);
     }
 
     public void initCarPage() {
@@ -74,6 +80,8 @@ public class CarPageManager extends AppCompatActivity {
         setTextView(tvGearbox, car.getGearbox());
         setTextView(tvAirConditioner, car.isAirConditioner());
         setTextView(tvPower, Integer.toString(car.getPower()));
+        setTextView(tvHourlyPrice, car.getHourlyPrice() + "$");
+        setTextView(tvDailyPrice, car.getDailyPrice() + "$");
         Picasso.get().load(car.getPhotosUris().get(0)).fit().into(ivCar);
     }
 

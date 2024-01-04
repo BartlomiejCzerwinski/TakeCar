@@ -99,6 +99,66 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitleCarPage" />
 
+    <ImageView
+        android:id="@+id/imageView2223"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/recentlage_car_info"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView222" />
+
+    <TextView
+        android:id="@+id/tvCarPageDailyPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="10$"
+        android:textColor="#2F2F2F"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/tvCarPageHourlyPrice"
+        app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/tvCarPageHourlyPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="10$"
+        android:textColor="#2F2F2F"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/tvPowerCarPage"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins"
+        android:text="Price for day"
+        android:textColor="#2F2F2F"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins"
+        android:text="Price for hour"
+        android:textColor="#2F2F2F"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView2223"
+        app:layout_constraintTop_toTopOf="@+id/imageView2223" />
+
     <TextView
         android:id="@+id/tvPowerCarPage"
         android:layout_width="wrap_content"
