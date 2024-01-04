@@ -155,6 +155,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
+
         android:fontFamily="@font/poppins"
         android:text="Help"
         android:textColor="#2e2e2e"
@@ -183,7 +184,8 @@
         android:text="logout"
         android:textColor="#2e2e2e"
         app:layout_constraintTop_toBottomOf="@+id/view7"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:onClick="logout"/>
 
     <View
         android:id="@+id/view8"
