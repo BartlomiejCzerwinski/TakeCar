@@ -26,6 +26,7 @@
         <activity android:name=".AddCarManager"/>
         <activity android:name=".CarPageManager"></activity>
         <activity android:name=".RentCarManager"></activity>
+        <activity android:name=".SettingsPageManager"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -99,6 +99,11 @@ public class MainPageManager extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openSettingsPage(View view) {
+        Intent intent = new Intent(this, SettingsPageManager.class);
+        startActivity(intent);
+    }
+
     public void showLayout(ConstraintLayout layout) {
         layout.setVisibility(View.VISIBLE);
     }
