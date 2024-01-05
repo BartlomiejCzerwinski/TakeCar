@@ -67,6 +67,10 @@ public class DatabaseManager {
         void onFailedRent();
     }
 
+    public interface RentalsCallback {
+        void onRentalsReceived(ArrayList<Rental> rentals);
+    }
+
     public void addCarRent(Car car, int numberOfHours, int numberOfDays,
                            RentCarCallback rentCarCallback) {
         HashMap<String, String> data = new HashMap<String, String>();
@@ -329,6 +333,40 @@ public class DatabaseManager {
                 carDataCallback.onCarsDataError("ERROR");
             }
 
+        });
+    }
+
+    public void getRentalsOfCar(String carID, RentalsCallback rentalsCallback) {
+        getRentals(rentals -> {
+            ArrayList<Rental> result = new ArrayList<Rental>();
+            for (Rental rental : rentals) {
+                if (rental.getCarID().equals(carID))
+                    result.add(rental);
+            }
+            rentalsCallback.onRentalsReceived(rentals);
+        });
+    }
+
+    public void getRentals(RentalsCallback rentalsCallback) {
+        DatabaseReference ref = database.getReference("rentals");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Rental> rentals = new ArrayList<Rental>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    System.out.println("OBIEKT: " + dataSnapshot.getValue().toString());
+                    Rental rental = dataSnapshot.getValue(Rental.class);
+                    if (rental != null)
+                        rentals.add(rental);
+                }
+                System.out.println("RENTALS OBJECTS: " + rentals.toString());
+                rentalsCallback.onRentalsReceived(rentals);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
     }
 
