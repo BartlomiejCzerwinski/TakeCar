@@ -64,6 +64,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         context.startActivity(intent);
     }
 
+    public void runEditCarPage(View view, Car car) {
+        Intent intent = new Intent(this.context, EditCarPageManager.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("car", car);
+        context.startActivity(intent);
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
@@ -78,14 +85,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         viewHolder.getTextView().setText(carsList.get(position).getProducer().toString() + " " + carsList.get(position).getModel());
         Picasso.get().load(carsList.get(position).getPhotosUris().get(0)).fit().into(viewHolder.getImageView());
         viewHolder.getTvYear().setText(String.valueOf(carsList.get(position).getYear()));
-        viewHolder.getTvDailyPrice().setText("FROM " + carsList.get(position).getHourlyPrice() + "$/hour");
+        if (isRunningTakeList) {
+            viewHolder.getTvDailyPrice().setText("FROM " + carsList.get(position).getHourlyPrice() + "$/hour");
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    runCarPage(view, carsList.get(position));
+                }
+            });
+        }
+        else {
+            viewHolder.getTvDailyPrice().setText("PROPERTIES");
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    runEditCarPage(view, carsList.get(position));
+                }
+            });
+        }
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                runCarPage(view, carsList.get(position));
-            }
-        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
