@@ -58,7 +58,7 @@ public class MainPageManager extends AppCompatActivity {
         databaseManager.getCars(false, new DatabaseManager.CarDataCallback() {
             @Override
             public void onCarsDataReceived(ArrayList<Car> carsList) {
-                runRecyclerView(carsList, rvTake);
+                runRecyclerView(carsList, rvTake, true);
             }
 
             @Override
@@ -73,7 +73,7 @@ public class MainPageManager extends AppCompatActivity {
         databaseManager.getCars(true, new DatabaseManager.CarDataCallback() {
             @Override
             public void onCarsDataReceived(ArrayList<Car> carsList) {
-                runRecyclerView(carsList, rvRent);
+                runRecyclerView(carsList, rvRent, false);
             }
 
             @Override
@@ -132,9 +132,9 @@ public class MainPageManager extends AppCompatActivity {
         recyclerView.addItemDecoration(itemDecorator);
     }
     
-    public void runRecyclerView(ArrayList<Car> cars, RecyclerView recyclerView) {
+    public void runRecyclerView(ArrayList<Car> cars, RecyclerView recyclerView, boolean isRunningTakeList) {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        MyAdapter myAdapter = new MyAdapter(cars, this.getApplicationContext());
+        MyAdapter myAdapter = new MyAdapter(cars, isRunningTakeList, this.getApplicationContext());
         recyclerView.setAdapter(myAdapter);
     }
 

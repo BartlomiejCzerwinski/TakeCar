@@ -22,6 +22,7 @@ import java.util.Locale;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     ArrayList<Car> carsList;
+    public boolean isRunningTakeList;
     private int CAR_IMAGE_WIDTH = 400;
     private int CAR_IMAGE_HEIGHT = 250;
     Context context;
@@ -93,8 +94,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return carsList.size();
     }
 
-    public MyAdapter(ArrayList<Car> cars, Context context) {
+    public MyAdapter(ArrayList<Car> cars, boolean isRunningTakeList, Context context) {
         this.carsList = cars;
+        this.isRunningTakeList = isRunningTakeList;
         this.context = context;
     }
 }
