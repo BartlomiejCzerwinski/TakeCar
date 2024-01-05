@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
+import java.net.InterfaceAddress;
+
 public class EditCarPageManager extends AppCompatActivity {
 
     private Car car;
@@ -32,6 +34,8 @@ public class EditCarPageManager extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_manager_page);
         car = getCarFromIntent();
+        setObjects();
+        initCarPage();
     }
 
     public Car getCarFromIntent() {
@@ -44,7 +48,7 @@ public class EditCarPageManager extends AppCompatActivity {
     }
 
     @SuppressLint("WrongViewCast")
-    public void setEditTextObjects() {
+    public void setObjects() {
         tvYear = findViewById(R.id.tvYearCarEditPage);
         tvTitle = findViewById(R.id.tvTitleCarEditPage);
         etPlaces = findViewById(R.id.etPlacesCarEditPage);
@@ -58,13 +62,14 @@ public class EditCarPageManager extends AppCompatActivity {
     }
 
     public void initCarPage() {
-        tvYear.setText(car.getYear());
+        System.out.println("tvYear:" + tvYear.toString());
+        tvYear.setText(Integer.toString(car.getYear()));
         tvTitle.setText(car.getProducer() + " " + car.getModel());
-        etPlaces.setText(car.getPlaces());
-        etDoors.setText(car.getDoors());
+        etPlaces.setText(Integer.toString(car.getPlaces()));
+        etDoors.setText(Integer.toString(car.getDoors()));
         tvGearbox.setText(car.getGearbox());
         tvAirConditioner.setText(car.isAirConditioner());
-        etPower.setText(car.getPower());
+        etPower.setText(Integer.toString(car.getPower()));
         etHourlyPrice.setText(car.getHourlyPrice() + "$");
         etDailyPrice.setText(car.getDailyPrice() + "$");
         Picasso.get().load(car.getPhotosUris().get(0)).fit().into(ivCar);
