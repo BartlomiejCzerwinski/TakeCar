@@ -277,7 +277,7 @@ public class DatabaseManager {
     }
 
 
-    public void getCars(CarDataCallback carDataCallback) {
+    public void getCars(Boolean getCarsOwnedByLoggedUser, CarDataCallback carDataCallback) {
         DatabaseReference ref = database.getReference("cars");
         ArrayList<Car> carsList = new ArrayList<Car>();
         ref.addValueEventListener(new ValueEventListener() {
@@ -288,6 +288,7 @@ public class DatabaseManager {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
                     cars.forEach((key, value) -> {
+                        if (!getCarsOwnedByLoggedUser)
                         if (isCarRented(value.get("endRentalTime"))) {
                             reservedCars++;
                             return;
@@ -301,7 +302,11 @@ public class DatabaseManager {
                                     numberOfCars++;
 
                                     if (numberOfCars == cars.size() - reservedCars) {
-                                        ArrayList<Car> result = getCarsNotOwnedByLoggedUser(carsList);
+                                        ArrayList<Car> result = null;
+                                        if (getCarsOwnedByLoggedUser)
+                                            result = getCarsOwnedByLoggedUser(carsList);
+                                        else
+                                            result = getCarsNotOwnedByLoggedUser(carsList);
                                         carDataCallback.onCarsDataReceived(result);
                                         numberOfCars = 0;
                                     }
@@ -331,6 +336,16 @@ public class DatabaseManager {
         ArrayList<Car> result = new ArrayList<Car>();
         for (Car car : carsList) {
             if (!isCarOwnerWantsToLoadHisCarOnTakePage(car.getOwnerID(), FirebaseAuth.getInstance().getUid())) {
+                result.add(car);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Car> getCarsOwnedByLoggedUser(ArrayList<Car> carsList) {
+        ArrayList<Car> result = new ArrayList<Car>();
+        for (Car car : carsList) {
+            if (isCarOwnerWantsToLoadHisCarOnTakePage(car.getOwnerID(), FirebaseAuth.getInstance().getUid())) {
                 result.add(car);
             }
         }

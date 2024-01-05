@@ -48,7 +48,7 @@ public class MainPageManager extends AppCompatActivity {
 
 
         DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.getCars(new DatabaseManager.CarDataCallback() {
+        databaseManager.getCars(false, new DatabaseManager.CarDataCallback() {
             @Override
             public void onCarsDataReceived(ArrayList<Car> carsList) {
                 System.out.println("CARS INFO:" + carsList.toString());
