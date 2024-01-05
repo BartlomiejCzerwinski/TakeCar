@@ -1,12 +1,11 @@
 package com.example.myapplication.takecar;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
@@ -33,6 +31,10 @@ public class MainPageManager extends AppCompatActivity {
     private ConstraintLayout layoutRent;
     private ConstraintLayout layoutTake;
 
+    private RecyclerView rvRent;
+    private RecyclerView rvTake;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,17 +44,36 @@ public class MainPageManager extends AppCompatActivity {
         tvRent = findViewById(R.id.tvRent);
         layoutRent = findViewById(R.id.layoutRent);
         layoutTake = findViewById(R.id.layoutTake);
+        rvRent = findViewById(R.id.rvRent);
+        setRecyclerViewItemsDivider(rvRent);
+        rvTake = findViewById(R.id.rvTake);
+        setRecyclerViewItemsDivider(rvTake);
         setSwitchListener();
         setUserName();
+        runTakeView();
+    }
 
-
-
+    public void runTakeView() {
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.getCars(false, new DatabaseManager.CarDataCallback() {
             @Override
             public void onCarsDataReceived(ArrayList<Car> carsList) {
-                System.out.println("CARS INFO:" + carsList.toString());
-                runRecyclerView(carsList);
+                runRecyclerView(carsList, rvTake);
+            }
+
+            @Override
+            public void onCarsDataError(String errorMessage) {
+
+            }
+        });
+    }
+
+    public void runRentView() {
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.getCars(true, new DatabaseManager.CarDataCallback() {
+            @Override
+            public void onCarsDataReceived(ArrayList<Car> carsList) {
+                runRecyclerView(carsList, rvRent);
             }
 
             @Override
@@ -80,6 +101,7 @@ public class MainPageManager extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         if (backPressedTime + CLOSE_APP_INTERVAL > System.currentTimeMillis()) {
             moveTaskToBack(true);
         }
@@ -103,15 +125,15 @@ public class MainPageManager extends AppCompatActivity {
     public void hideLayout(ConstraintLayout layout) {
         layout.setVisibility(View.INVISIBLE);
     }
-    
-    public void runRecyclerView(ArrayList<Car> cars) {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
+    public void setRecyclerViewItemsDivider(RecyclerView recyclerView) {
         DividerItemDecoration itemDecorator = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(getDrawable(R.drawable.divider));
         recyclerView.addItemDecoration(itemDecorator);
-
+    }
+    
+    public void runRecyclerView(ArrayList<Car> cars, RecyclerView recyclerView) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         MyAdapter myAdapter = new MyAdapter(cars, this.getApplicationContext());
         recyclerView.setAdapter(myAdapter);
     }
@@ -141,11 +163,13 @@ public class MainPageManager extends AppCompatActivity {
                     tvRent.setTextColor(colorWhite);
                     hideLayout(layoutTake);
                     showLayout(layoutRent);
+                    runRentView();
                 } else {
                     tvTake.setTextColor(colorWhite);
                     tvRent.setTextColor(colorBlack);
                     hideLayout(layoutRent);
                     showLayout(layoutTake);
+                    runTakeView();
                 }
             }
         });

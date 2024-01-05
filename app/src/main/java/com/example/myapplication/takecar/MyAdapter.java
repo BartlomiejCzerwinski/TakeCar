@@ -63,26 +63,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         context.startActivity(intent);
     }
 
-    ///public MyAdapter(String[] dataSet) {
-    //    localDataSet = dataSet;
-    //}
-
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.list_car_layout, viewGroup, false);
 
         return new ViewHolder(view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") final int position) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         viewHolder.itemView.setTag(carsList.get(position).getID());
         viewHolder.getTextView().setText(carsList.get(position).getProducer().toString() + " " + carsList.get(position).getModel());
         Picasso.get().load(carsList.get(position).getPhotosUris().get(0)).fit().into(viewHolder.getImageView());
