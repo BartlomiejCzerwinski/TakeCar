@@ -1,6 +1,9 @@
 package com.example.myapplication.takecar;
 
+import static java.lang.Math.round;
+
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -8,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
 import java.net.InterfaceAddress;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class EditCarPageManager extends AppCompatActivity {
 
@@ -36,6 +42,41 @@ public class EditCarPageManager extends AppCompatActivity {
         car = getCarFromIntent();
         setObjects();
         initCarPage();
+        getCarStatistics();
+    }
+
+    public void getCarStatistics() {
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.getRentalsOfCar(car.getID(), new DatabaseManager.RentalsCallback() {
+            @Override
+            public void onRentalsReceived(ArrayList<Rental> rentals) {
+                System.out.println("RENTALS OF THIS CAR: " + rentals.toString());
+                System.out.println("NUMBER OF RENTALS: " + getNumberOfRentals(rentals));
+                System.out.println("TOTAL INCOME: " +getTotalIncomeFromCar(rentals));
+                System.out.println("AVG INCOME: " + getAvgIncomeFromCar(rentals));
+            }
+        });
+    }
+
+    public int getNumberOfRentals(ArrayList<Rental> rentals) {
+        return rentals.size();
+    }
+
+    public int getTotalIncomeFromCar(ArrayList<Rental> rentals) {
+        int result = 0;
+        for (Rental rental : rentals) {
+            result += rental.getTotalPrice();
+        }
+        return result;
+    }
+
+    public float getAvgIncomeFromCar(ArrayList<Rental> rentals) {
+        int numberOfRentals = getNumberOfRentals(rentals);
+        int totalIncome = getTotalIncomeFromCar(rentals);
+        float avgIncome =  (float)totalIncome / (float)numberOfRentals;
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        String roundedAvgIncome = decimalFormat.format(avgIncome);
+        return Float.parseFloat(roundedAvgIncome);
     }
 
     public Car getCarFromIntent() {
