@@ -343,7 +343,7 @@ public class DatabaseManager {
                 if (rental.getCarID().equals(carID))
                     result.add(rental);
             }
-            rentalsCallback.onRentalsReceived(rentals);
+            rentalsCallback.onRentalsReceived(result);
         });
     }
 
