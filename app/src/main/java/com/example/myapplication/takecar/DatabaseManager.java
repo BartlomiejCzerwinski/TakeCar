@@ -342,6 +342,11 @@ public class DatabaseManager {
         });
     }
 
+    public void deleteCar(String carID) {
+        DatabaseReference ref = database.getReference("cars/" + carID + "/isAvailable");
+        ref.setValue("false");
+    }
+
     public boolean isCarAvailable(String isAvailable) {
         System.out.println("is available: " + isAvailable);
         return Boolean.valueOf(isAvailable);

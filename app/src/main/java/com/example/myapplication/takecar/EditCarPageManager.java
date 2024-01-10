@@ -97,6 +97,11 @@ public class EditCarPageManager extends AppCompatActivity {
         return result;
     }
 
+    public void deleteCar(View view) {
+        DatabaseManager databaseManager = new DatabaseManager();
+        databaseManager.deleteCar(car.getID());
+    }
+
     public String getAvgIncomeFromCar(ArrayList<Rental> rentals) {
         int numberOfRentals = getNumberOfRentals(rentals);
         int totalIncome = getTotalIncomeFromCar(rentals);
