@@ -348,7 +348,6 @@ public class DatabaseManager {
     }
 
     public boolean isCarAvailable(String isAvailable) {
-        System.out.println("is available: " + isAvailable);
         return Boolean.valueOf(isAvailable);
     }
 

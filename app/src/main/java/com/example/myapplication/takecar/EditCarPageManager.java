@@ -3,6 +3,9 @@ package com.example.myapplication.takecar;
 import static java.lang.Math.round;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -100,6 +103,33 @@ public class EditCarPageManager extends AppCompatActivity {
     public void deleteCar(View view) {
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.deleteCar(car.getID());
+        showAlertDialog(this, "Car successfully deleted");
+    }
+
+    public static void showAlertDialog(Context context, String message) {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+        alertDialogBuilder.setTitle("Rent car info");
+
+        alertDialogBuilder.setMessage(message);
+
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                backToMainPage(context);
+            }
+        });
+        alertDialogBuilder.setCancelable(false);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public static void backToMainPage(Context context) {
+        Intent intent = new Intent(context, MainPageManager.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
     }
 
     public String getAvgIncomeFromCar(ArrayList<Rental> rentals) {
