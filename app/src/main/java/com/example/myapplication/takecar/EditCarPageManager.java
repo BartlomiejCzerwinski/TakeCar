@@ -3,20 +3,18 @@ package com.example.myapplication.takecar;
 import static java.lang.Math.round;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
-import java.net.InterfaceAddress;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -35,6 +33,9 @@ public class EditCarPageManager extends AppCompatActivity {
     private EditText etDailyPrice;
     private ImageView ivCar;
 
+    private boolean isLoadedIncomesPage = false;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,18 +43,44 @@ public class EditCarPageManager extends AppCompatActivity {
         car = getCarFromIntent();
         setObjects();
         initCarPage();
-        getCarStatistics();
     }
 
-    public void getCarStatistics() {
+    public void recreatePage() {
+        setContentView(R.layout.activity_car_manager_page);
+        setObjects();
+        initCarPage();
+        isLoadedIncomesPage = false;
+    }
+
+    public void loadIncomesPage(View view) {
+        setContentView(R.layout.acivity_car_incomes);
+        loadCarStatistics();
+        isLoadedIncomesPage = true;
+    }
+
+    public void onBackArrowClick(View view) {
+        onBackPressed();
+    }
+    @Override
+    public void onBackPressed() {
+        if (isLoadedIncomesPage)
+            recreatePage();
+        else
+            super.onBackPressed();
+    }
+
+    public void loadCarStatistics() {
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView tvIncome = findViewById(R.id.tvTotalIncome);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView tvNumberOfRentals = findViewById(R.id.tvNumberOfRentals);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView tvAvgIncome = findViewById(R.id.tvAvgIncome);
+
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.getRentalsOfCar(car.getID(), new DatabaseManager.RentalsCallback() {
             @Override
             public void onRentalsReceived(ArrayList<Rental> rentals) {
-                System.out.println("RENTALS OF THIS CAR: " + rentals.toString());
-                System.out.println("NUMBER OF RENTALS: " + getNumberOfRentals(rentals));
-                System.out.println("TOTAL INCOME: " +getTotalIncomeFromCar(rentals));
-                System.out.println("AVG INCOME: " + getAvgIncomeFromCar(rentals));
+                tvIncome.setText(getTotalIncomeFromCar(rentals) + "$");
+                tvNumberOfRentals.setText(Integer.toString(getNumberOfRentals(rentals)));
+                tvAvgIncome.setText(getAvgIncomeFromCar(rentals) + "$/rent");
             }
         });
     }

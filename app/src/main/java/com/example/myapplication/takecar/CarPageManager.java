@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
-import java.net.InterfaceAddress;
-
 public class CarPageManager extends AppCompatActivity {
 
     private Car car;
@@ -67,7 +65,7 @@ public class CarPageManager extends AppCompatActivity {
         tvDoors = findViewById(R.id.tvDoorsCarPage);
         tvGearbox = findViewById(R.id.tvGearboxCarPage);
         tvAirConditioner = findViewById(R.id.tvAcCarPage);
-        tvPower = findViewById(R.id.tvPowerCarPage);
+        tvPower = findViewById(R.id.textView21);
         tvHourlyPrice = findViewById(R.id.tvCarPageHourlyPrice);
         tvDailyPrice = findViewById(R.id.tvCarPageDailyPrice);
     }

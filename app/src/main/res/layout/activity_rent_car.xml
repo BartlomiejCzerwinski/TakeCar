@@ -111,12 +111,12 @@
         android:textColor="#2F2F2F"
         android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tvPowerCarPage"
-        app:layout_constraintEnd_toEndOf="@+id/tvHourPrice"
-        app:layout_constraintTop_toTopOf="@+id/tvPowerCarPage" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView21"
+        app:layout_constraintEnd_toEndOf="@+id/tvTotalIncome"
+        app:layout_constraintTop_toTopOf="@+id/textView21" />
 
     <TextView
-        android:id="@+id/tvHourPrice"
+        android:id="@+id/tvTotalIncome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="120dp"
@@ -144,7 +144,7 @@
 
 
     <TextView
-        android:id="@+id/tvPowerCarPage"
+        android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

@@ -29,6 +29,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public void back(View view) {
+        onBackPressed();
+    }
+
     public void openRegistrationForm(View view) {
         Intent intent = new Intent(this, RegistrationFormManager.class);
         startActivity(intent);

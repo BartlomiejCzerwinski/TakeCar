@@ -58,6 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:onClick="loadIncomesPage"
         />
 
     <TextView
@@ -344,7 +345,7 @@
         android:src="@drawable/arrow_back"
         app:layout_constraintStart_toStartOf="@+id/iVCarEditPage"
         app:layout_constraintTop_toTopOf="@+id/iVCarEditPage"
-        android:onClick="backToMainPage"></ImageView>
+        android:onClick="onBackArrowClick"></ImageView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

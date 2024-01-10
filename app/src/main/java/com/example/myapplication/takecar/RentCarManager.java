@@ -6,11 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +40,7 @@ public class RentCarManager extends AppCompatActivity {
         sbHours = findViewById(R.id.sbHours);
         sbDays = findViewById(R.id.sbDays);
         tvProducerModel = findViewById(R.id.tvProducerModel);
-        tvHourPrice = findViewById(R.id.tvHourPrice);
+        tvHourPrice = findViewById(R.id.tvTotalIncome);
         tvDayPrice = findViewById(R.id.tvDayPrice);
         tvRentalPrice = findViewById(R.id.tvRentalPrice);
 

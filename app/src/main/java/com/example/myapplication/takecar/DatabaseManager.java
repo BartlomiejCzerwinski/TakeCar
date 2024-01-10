@@ -340,6 +340,7 @@ public class DatabaseManager {
         getRentals(rentals -> {
             ArrayList<Rental> result = new ArrayList<Rental>();
             for (Rental rental : rentals) {
+                if (rental.getCarID() != null)
                 if (rental.getCarID().equals(carID))
                     result.add(rental);
             }
@@ -354,7 +355,6 @@ public class DatabaseManager {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Rental> rentals = new ArrayList<Rental>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    System.out.println("OBIEKT: " + dataSnapshot.getValue().toString());
                     Rental rental = dataSnapshot.getValue(Rental.class);
                     if (rental != null)
                         rentals.add(rental);
