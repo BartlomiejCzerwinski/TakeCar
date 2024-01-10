@@ -290,12 +290,18 @@ public class DatabaseManager {
                 HashMap<String, HashMap<String, String>> cars = (HashMap<String, HashMap<String, String>>)dataSnapshot.getValue();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
                     cars.forEach((key, value) -> {
-                        if (!getCarsOwnedByLoggedUser)
-                        if (isCarRented(value.get("endRentalTime"))) {
-                            reservedCars++;
-                            return;
+                        if (!getCarsOwnedByLoggedUser) {
+                            if (isCarRented(value.get("endRentalTime")) || !isCarAvailable(value.get("isAvailable"))) {
+                                reservedCars++;
+                                return;
+                            }
+                        }
+                        else {
+                            if (!isCarAvailable(value.get("isAvailable"))) {
+                                reservedCars++;
+                                return;
+                            }
                         }
                         Car car = createCarObject(key, value);
                             getCarPhotos(key, new CarPhotosCallback() {
@@ -334,6 +340,11 @@ public class DatabaseManager {
             }
 
         });
+    }
+
+    public boolean isCarAvailable(String isAvailable) {
+        System.out.println("is available: " + isAvailable);
+        return Boolean.valueOf(isAvailable);
     }
 
     public void getRentalsOfCar(String carID, RentalsCallback rentalsCallback) {
