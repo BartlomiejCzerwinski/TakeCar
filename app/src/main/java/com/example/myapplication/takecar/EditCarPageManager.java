@@ -97,13 +97,13 @@ public class EditCarPageManager extends AppCompatActivity {
         return result;
     }
 
-    public float getAvgIncomeFromCar(ArrayList<Rental> rentals) {
+    public String getAvgIncomeFromCar(ArrayList<Rental> rentals) {
         int numberOfRentals = getNumberOfRentals(rentals);
         int totalIncome = getTotalIncomeFromCar(rentals);
         float avgIncome =  (float)totalIncome / (float)numberOfRentals;
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String roundedAvgIncome = decimalFormat.format(avgIncome);
-        return Float.parseFloat(roundedAvgIncome);
+        return roundedAvgIncome;
     }
 
     public Car getCarFromIntent() {
