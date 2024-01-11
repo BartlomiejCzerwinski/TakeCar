@@ -457,6 +457,7 @@ public class DatabaseManager {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             carInfo.put("endRentalTime", String.valueOf(LocalDateTime.now().minusDays(1))); // If the car was never rented, it's rental date is expired.
         }                                                                                   // The car will be available after adding it.
+        carInfo.put("isAvailable", "true");
 
         return carInfo;
     }
