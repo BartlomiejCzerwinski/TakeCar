@@ -1,6 +1,10 @@
 package com.example.myapplication.takecar;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -66,10 +70,30 @@ public class AddCarManager extends AppCompatActivity {
     }
 
     public void addCar(View view) {
+        Context context = this;
         getDataFromAddCarForm();
         System.out.println(car.toString());
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.addCar(car);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Car added");
+        alertDialogBuilder.setMessage("Car successfully added");
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                backToMainPage(context);
+            }
+        });
+        alertDialogBuilder.setCancelable(true);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public static void backToMainPage(Context context) {
+        Intent intent = new Intent(context, MainPageManager.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
     }
 
     public void initPhotoPicker() {
