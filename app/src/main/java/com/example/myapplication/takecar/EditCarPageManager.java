@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -101,27 +102,45 @@ public class EditCarPageManager extends AppCompatActivity {
     }
 
     public void deleteCar(View view) {
-        DatabaseManager databaseManager = new DatabaseManager();
-        databaseManager.deleteCar(car.getID());
-        showAlertDialog(this, "Car successfully deleted");
+        showAlertDialog(this, "Are you sure you want to delete this car?", car.getID());
     }
 
-    public static void showAlertDialog(Context context, String message) {
+    public static void showAlertDialog(Context context, String message, String carID) {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
-        alertDialogBuilder.setTitle("Rent car info");
+        alertDialogBuilder.setTitle("Delete car info");
 
         alertDialogBuilder.setMessage(message);
 
-        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+                alertBuilder.setTitle("Car deleted");
+                alertBuilder.setMessage("Car successfully deleted");
+                alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseManager databaseManager = new DatabaseManager();
+                        databaseManager.deleteCar(carID);
+                        backToMainPage(context);
+                    }
+                });
+                alertBuilder.setCancelable(false);
+                AlertDialog alertDialog = alertBuilder.create();
+                alertDialog.show();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                backToMainPage(context);
             }
         });
-        alertDialogBuilder.setCancelable(false);
+
+        alertDialogBuilder.setCancelable(true);
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
