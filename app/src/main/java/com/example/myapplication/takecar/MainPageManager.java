@@ -4,8 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainPageManager extends AppCompatActivity {
 
@@ -43,6 +49,14 @@ public class MainPageManager extends AppCompatActivity {
 
     private TextView textViewMainPage;
 
+    private PopupWindow popupWindow;
+
+    private enum SortingType{
+        RANDOMLY,
+        LOWEST_PRICE,
+        BIGGEST_PRICE
+    }
+
     @SuppressLint({"MissingInflatedId", "ResourceType"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +76,7 @@ public class MainPageManager extends AppCompatActivity {
         setRecyclerViewItemsDivider(rvTake);
         setSwitchListener();
         setUserName();
-        runTakeView();
+        runTakeView(SortingType.RANDOMLY);
     }
 
     public void setBackgroundColor(String hexColor) {
@@ -70,12 +84,26 @@ public class MainPageManager extends AppCompatActivity {
         pageBackgroundLayout.setBackgroundColor(intColor);
     }
 
-    public void runTakeView() {
+
+
+    public void runTakeView(SortingType sortingType) {
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.getCars(false, new DatabaseManager.CarDataCallback() {
             @Override
             public void onCarsDataReceived(ArrayList<Car> carsList) {
-                runRecyclerView(carsList, rvTake, true);
+                switch (sortingType) {
+                    case RANDOMLY:
+                        runRecyclerView(carsList, rvTake, true);
+                        break;
+                    case LOWEST_PRICE:
+                        Collections.sort(carsList);
+                        runRecyclerView(carsList, rvTake, true);
+                        break;
+                    case BIGGEST_PRICE:
+                        Collections.sort(carsList);
+                        Collections.reverse(carsList);
+                        runRecyclerView(carsList, rvTake, true);
+                }
             }
 
             @Override
@@ -83,6 +111,23 @@ public class MainPageManager extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void sortCarsByLowestPrice(View view) {
+        runTakeView(SortingType.LOWEST_PRICE);
+        popupWindow.dismiss();
+    }
+
+    public void sortCarsByHighestPrice(View view) {
+        runTakeView(SortingType.BIGGEST_PRICE);
+        popupWindow.dismiss();
+    }
+
+    @SuppressLint("ResourceType")
+    public void runPopupWindow(View view) {
+        View popupView = LayoutInflater.from(this).inflate(R.layout.popup_window, null);
+        popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow.showAtLocation(view , Gravity.CENTER, 0, 0);
     }
 
     public void runRentView() {
@@ -192,7 +237,7 @@ public class MainPageManager extends AppCompatActivity {
                     tvRent.setTextColor(colorBlack);
                     hideLayout(layoutRent);
                     showLayout(layoutTake);
-                    runTakeView();
+                    runTakeView(SortingType.RANDOMLY);
                     textViewMainPage.setText(TAKE_TEXT);
                     setBackgroundColor("#CC0B6FF4");
                 }

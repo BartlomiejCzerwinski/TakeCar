@@ -1,0 +1,59 @@
+<!-- res/layout/popup_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#F3F3F3">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#E1E0E0"/>
+
+
+    <Button
+        android:id="@+id/btSortByLowestPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#F3F3F3"
+        android:fontFamily="@font/poppins"
+        android:onClick="sortCarsByLowestPrice"
+        android:stateListAnimator="@null"
+        android:text="Sort from lowest price"
+        android:textColor="#2e2e2e" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#E1E0E0" />
+
+    <Button
+        android:id="@+id/sortByHighestPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#F3F3F3"
+        android:fontFamily="@font/poppins"
+        android:onClick="sortCarsByHighestPrice"
+        android:stateListAnimator="@null"
+        android:text="sort by highest price"
+        android:textColor="#2e2e2e" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#E1E0E0"/>
+
+</LinearLayout>
