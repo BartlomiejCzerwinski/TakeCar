@@ -24,6 +24,8 @@ public class RentCarManager extends AppCompatActivity {
     private TextView tvDayPrice;
     private TextView tvRentalPrice;
 
+    private TextView tvBetterOptionAvailable;
+
     private Car car;
 
 
@@ -43,6 +45,7 @@ public class RentCarManager extends AppCompatActivity {
         tvHourPrice = findViewById(R.id.tvTotalIncome);
         tvDayPrice = findViewById(R.id.tvDayPrice);
         tvRentalPrice = findViewById(R.id.tvRentalPrice);
+        tvBetterOptionAvailable = findViewById(R.id.tvBetterOptionAvailable);
 
         setRentalInfo();
 
@@ -120,6 +123,18 @@ public class RentCarManager extends AppCompatActivity {
         tvDayPrice.setText(car.getDailyPrice() + "$");
     }
 
+    public void isBetterOptionAvailable() {
+        int numberOfHours = getNumberOfHours();
+        int hourlyPrice = car.getHourlyPrice();
+        int dailyPrice = car.getDailyPrice();
+        if ((numberOfHours * hourlyPrice) >= dailyPrice) {
+            tvBetterOptionAvailable.setVisibility(View.VISIBLE);
+        }
+        else {
+            tvBetterOptionAvailable.setVisibility(View.INVISIBLE);
+        }
+    }
+
     public Car getCarFromIntent() {
         Car car = null;
         Intent intent = getIntent();
@@ -144,6 +159,7 @@ public class RentCarManager extends AppCompatActivity {
                 else
                     textView.setText(progress + " " + textViewUnit + "s");
                 updateRentalPrice();
+                isBetterOptionAvailable();
             }
 
             @Override
