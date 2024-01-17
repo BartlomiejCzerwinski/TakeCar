@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Car implements Serializable {
+public class Car implements Serializable, Comparable<Car> {
     private String ID;
     private String producer;
     private String model;
@@ -189,5 +189,10 @@ public class Car implements Serializable {
 
     public int getRentalTotalPrice(int hours, int days) {
         return (hours * hourlyPrice) + (days * dailyPrice);
+    }
+
+    @Override
+    public int compareTo(Car c) {
+        return Integer.compare(this.hourlyPrice, c.hourlyPrice);
     }
 }
