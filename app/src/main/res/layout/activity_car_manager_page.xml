@@ -110,7 +110,7 @@
         android:backgroundTint="#F3F3F3"
         android:fontFamily="@font/poppins"
         android:scaleX="0.5"
-
+        android:onClick="toBeDoneToast"
         android:scaleY="0.5"
         android:text="Edit"
         android:textColor="#2E2E2E"
@@ -142,7 +142,7 @@
         android:height="20dp"
         android:backgroundTint="#F3F3F3"
         android:fontFamily="@font/poppins"
-
+        android:onClick="toBeDoneToast"
         android:scaleX="0.5"
         android:scaleY="0.5"
         android:text="Edit"

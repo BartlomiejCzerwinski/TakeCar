@@ -39,7 +39,8 @@
         android:text="Current rentals"
         android:textColor="#2e2e2e"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        tools:layout_editor_absoluteX="117dp" />
+        tools:layout_editor_absoluteX="117dp"
+        android:onClick="toBeDoneToast"/>
 
 
     <View
@@ -66,6 +67,7 @@
         android:textColor="#2e2e2e"
         app:layout_constraintTop_toBottomOf="@+id/view2"
         tools:layout_editor_absoluteX="0dp"
+        android:onClick="toBeDoneToast"
         />
 
     <View
@@ -91,7 +93,8 @@
         android:text="Account Balance"
         android:textColor="#2e2e2e"
         app:layout_constraintTop_toBottomOf="@+id/view3"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:onClick="toBeDoneToast"/>
 
     <View
         android:id="@+id/view4"
@@ -116,7 +119,8 @@
         android:text="Account Settings"
         android:textColor="#2e2e2e"
         app:layout_constraintTop_toBottomOf="@+id/view4"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:onClick="toBeDoneToast"/>
 
     <View
         android:id="@+id/view5"
@@ -141,7 +145,8 @@
         android:text="App settings"
         android:textColor="#2e2e2e"
         app:layout_constraintTop_toBottomOf="@+id/view5"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:onClick="toBeDoneToast"/>
 
     <View
         android:id="@+id/view6"
@@ -166,7 +171,8 @@
         android:text="Help"
         android:textColor="#2e2e2e"
         app:layout_constraintTop_toBottomOf="@+id/view6"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        android:onClick="toBeDoneToast"/>
 
     <View
         android:id="@+id/view7"

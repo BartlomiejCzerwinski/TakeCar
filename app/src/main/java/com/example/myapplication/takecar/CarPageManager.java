@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -89,6 +90,13 @@ public class CarPageManager extends AppCompatActivity {
 
     public void backToMainPage(View view) {
         onBackPressed();
+    }
+
+    public void toBeDoneToast(View view) {
+        String message = "To be done...";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, message, duration);
+        toast.show();
     }
 
 }

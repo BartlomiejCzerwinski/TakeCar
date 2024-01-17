@@ -8,11 +8,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -195,5 +197,14 @@ public class EditCarPageManager extends AppCompatActivity {
         etHourlyPrice.setText(car.getHourlyPrice() + "$");
         etDailyPrice.setText(car.getDailyPrice() + "$");
         Picasso.get().load(car.getPhotosUris().get(0)).fit().into(ivCar);
+    }
+
+    public void toBeDoneToast(View view) {
+        String message = "To be done...";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, message, duration);
+        toast.show();
+        Vibrator v = (Vibrator) getSystemService(getApplicationContext().VIBRATOR_SERVICE);
+        v.vibrate(100);
     }
 }

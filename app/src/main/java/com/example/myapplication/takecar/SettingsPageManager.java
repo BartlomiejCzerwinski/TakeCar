@@ -2,7 +2,9 @@ package com.example.myapplication.takecar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,5 +25,14 @@ public class SettingsPageManager extends AppCompatActivity {
         mAuth.signOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void toBeDoneToast(View view) {
+        String message = "To be done...";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, message, duration);
+        toast.show();
+        Vibrator v = (Vibrator) getSystemService(getApplicationContext().VIBRATOR_SERVICE);
+        v.vibrate(100);
     }
 }
