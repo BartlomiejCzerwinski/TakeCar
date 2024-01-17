@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseError;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class MainPageManager extends AppCompatActivity {
@@ -34,23 +36,38 @@ public class MainPageManager extends AppCompatActivity {
     private RecyclerView rvRent;
     private RecyclerView rvTake;
 
-    @SuppressLint("MissingInflatedId")
+    private ConstraintLayout pageBackgroundLayout;
+
+    private String TAKE_TEXT = "take your car today.";
+    private String RENT_TEXT = "rent your car today.";
+
+    private TextView textViewMainPage;
+
+    @SuppressLint({"MissingInflatedId", "ResourceType"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+        pageBackgroundLayout = findViewById(R.id.mainPageBackground);
+
         switchCompat = findViewById(R.id.switchCompat);
         tvTake = findViewById(R.id.tvTake);
         tvRent = findViewById(R.id.tvRent);
         layoutRent = findViewById(R.id.layoutRent);
         layoutTake = findViewById(R.id.layoutTake);
         rvRent = findViewById(R.id.rvRent);
+        textViewMainPage = findViewById(R.id.textViewMainPage);
         setRecyclerViewItemsDivider(rvRent);
         rvTake = findViewById(R.id.rvTake);
         setRecyclerViewItemsDivider(rvTake);
         setSwitchListener();
         setUserName();
         runTakeView();
+    }
+
+    public void setBackgroundColor(String hexColor) {
+        int intColor = Color.parseColor(hexColor);
+        pageBackgroundLayout.setBackgroundColor(intColor);
     }
 
     public void runTakeView() {
@@ -148,11 +165,15 @@ public class MainPageManager extends AppCompatActivity {
             tvRent.setTextColor(colorWhite);
             hideLayout(layoutTake);
             showLayout(layoutRent);
+            textViewMainPage.setText(RENT_TEXT);
+            setBackgroundColor("#A63D40");
         } else {
             tvTake.setTextColor(colorWhite);
             tvRent.setTextColor(colorBlack);
             hideLayout(layoutRent);
             showLayout(layoutTake);
+            textViewMainPage.setText(TAKE_TEXT);
+            setBackgroundColor("#CC0B6FF4");
         }
 
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -164,12 +185,16 @@ public class MainPageManager extends AppCompatActivity {
                     hideLayout(layoutTake);
                     showLayout(layoutRent);
                     runRentView();
+                    textViewMainPage.setText(RENT_TEXT);
+                    setBackgroundColor("#A63D40");
                 } else {
                     tvTake.setTextColor(colorWhite);
                     tvRent.setTextColor(colorBlack);
                     hideLayout(layoutRent);
                     showLayout(layoutTake);
                     runTakeView();
+                    textViewMainPage.setText(TAKE_TEXT);
+                    setBackgroundColor("#CC0B6FF4");
                 }
             }
         });
