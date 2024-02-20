@@ -79,13 +79,6 @@ public class MainPageManager extends AppCompatActivity {
         runTakeView(SortingType.RANDOMLY);
     }
 
-    public void setBackgroundColor(String hexColor) {
-        int intColor = Color.parseColor(hexColor);
-        pageBackgroundLayout.setBackgroundColor(intColor);
-    }
-
-
-
     public void runTakeView(SortingType sortingType) {
         DatabaseManager databaseManager = new DatabaseManager();
         databaseManager.getCars(false, new DatabaseManager.CarDataCallback() {
@@ -211,14 +204,12 @@ public class MainPageManager extends AppCompatActivity {
             hideLayout(layoutTake);
             showLayout(layoutRent);
             textViewMainPage.setText(RENT_TEXT);
-            setBackgroundColor("#A63D40");
         } else {
             tvTake.setTextColor(colorWhite);
             tvRent.setTextColor(colorBlack);
             hideLayout(layoutRent);
             showLayout(layoutTake);
             textViewMainPage.setText(TAKE_TEXT);
-            setBackgroundColor("#CC0B6FF4");
         }
 
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -231,7 +222,6 @@ public class MainPageManager extends AppCompatActivity {
                     showLayout(layoutRent);
                     runRentView();
                     textViewMainPage.setText(RENT_TEXT);
-                    setBackgroundColor("#A63D40");
                 } else {
                     tvTake.setTextColor(colorWhite);
                     tvRent.setTextColor(colorBlack);
@@ -239,7 +229,6 @@ public class MainPageManager extends AppCompatActivity {
                     showLayout(layoutTake);
                     runTakeView(SortingType.RANDOMLY);
                     textViewMainPage.setText(TAKE_TEXT);
-                    setBackgroundColor("#CC0B6FF4");
                 }
             }
         });
