@@ -1,6 +1,7 @@
 # TakeCar
 Android car rental application. An application connects people that want to earn money on renting their car with one's that looking for car.
-Current version of application provides base stack of functionalities (some more functionalities are TODO list)
+Current version of application provides base stack of functionalities (some more functionalities are TODO)
+An application is built using java with Android SDK. The database part of application is created using Firebase (Authentication, Realtime Database, Storage) 
 
 ## Table of functionalities
 |          Functionality          |     Status    |
