@@ -2,7 +2,7 @@
 Android car rental application. An application connects people that want to earn money on renting their car with one's that looking for car.
 Current version of application provides base stack of functionalities (some more functionalities are TODO list)
 
-##Table of functionalities
+## Table of functionalities
 |          Functionality          |     Status    |
 | ------------------------------- | ------------- |
 |     Registration and sign up    |      Done     |
