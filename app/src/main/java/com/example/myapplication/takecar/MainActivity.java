@@ -15,6 +15,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String APP_ID = "";
+    private String API_KEY = "";
+    private String PROJECT_ID = "";
+    private String DB_URL = "";
+    private String STORAGE_BUCKET = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +57,12 @@ public class MainActivity extends AppCompatActivity {
     public void configFirebase() {
         try {
             FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setApplicationId("1:757032153397:android:5719cf22ba57d8089d5c7c") // Replace with your Firebase App ID
-                    .setApiKey("AIzaSyAlaFGL9XWiMgxfg2Xv5QZ9emllKVgaNQQ")       // Replace with your Firebase API Key
-                    .setProjectId("takecar-a8abc") // Replace with your Firebase Project ID
-                    .setDatabaseUrl("https://takecar-a8abc-default-rtdb.europe-west1.firebasedatabase.app/")
-                    .setStorageBucket("takecar-a8abc.appspot.com")
+                    .setApplicationId(APP_ID) // Replace with your Firebase App ID
+                    .setApiKey(API_KEY)       // Replace with your Firebase API Key
+                    .setProjectId(PROJECT_ID) // Replace with your Firebase Project ID
+                    .setDatabaseUrl(DB_URL)
+                    .setStorageBucket(STORAGE_BUCKET)
                     .build();
-
             FirebaseApp.initializeApp(this, options);
             System.out.println("Firebase initialization success");
         } catch (Exception e) {
