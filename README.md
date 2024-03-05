@@ -6,7 +6,7 @@ An application is built using java with Android SDK. The database part of applic
 ## Table of functionalities
 |          Functionality          |     Status    |
 | ------------------------------- | ------------- |
-|     Registration and sign up    |      Done     |
+|     Registration and sign in    |      Done     |
 |           Adding cars           |      Done     |
 |      Showing available cars     |      Done     |
 |           Renting cars          |      Done     |
