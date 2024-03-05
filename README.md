@@ -1,7 +1,7 @@
 # TakeCar
-Android car rental application. An application connects people that want to earn money on renting their car with one's that looking for car.
-Current version of application provides base stack of functionalities (some more functionalities are TODO)
-An application is built using java with Android SDK. The database part of application is created using Firebase (Authentication, Realtime Database, Storage) 
+Android car rental application. An application connects people who want to earn money on renting their car with one's that looking for car.
+The current version of the application provides a base stack of functionalities (some more functionalities are TODO).
+An application is built using java with Android SDK. The database part of application is created using [Firebase](https://firebase.google.com/) (Authentication, Realtime Database, Storage) 
 
 ## Table of functionalities
 |          Functionality          |     Status    |
@@ -18,8 +18,8 @@ An application is built using java with Android SDK. The database part of applic
 |       History of rentals        |      TODO     |
 
 ## Registration and sign in
-The system collects data of users in sake of cars rentals. Registered user can login into application and start renting cars.
-The whole functionality is based on Firebase Authentication.
+The system collects data of users for the sake of cars rentals. Registered users can log in to the application and start renting cars. 
+The whole functionality is based on Firebase Authentication. 
 
 <p float="left">
 <img src="https://private-user-images.githubusercontent.com/84719721/307100574-e0583dfc-c431-4697-9dd4-d4b9c26aeba2.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MDk2MjMwNDMsIm5iZiI6MTcwOTYyMjc0MywicGF0aCI6Ii84NDcxOTcyMS8zMDcxMDA1NzQtZTA1ODNkZmMtYzQzMS00Njk3LTlkZDQtZDRiOWMyNmFlYmEyLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDAzMDUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwMzA1VDA3MTIyM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc3ZGFmZjY4ZmEwMmYyMzRlMjA4ZTU1NjY4YjllNDIzMWY0MmNlNWZlOTRmMDg1YWZlYjdkNTNjN2RmMmRkMjgmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.hiKpg4HO8QYrCYvHZQa_W-0nlCgf26-bo-z0j2TMSC8" width="231" height="500" style="margin-right: 20px;"/>
